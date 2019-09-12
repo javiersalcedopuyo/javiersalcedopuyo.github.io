@@ -1,0 +1,36 @@
+.collapsibleButton
+{
+  background-color: #353849;
+  transition: background-color .35s ease-in-out;
+  width: 100%;
+  border-radius: 50px;
+}
+
+.collapsibleButton:hover
+{
+  background-color: #4C5C96;
+}
+
+.collapsibleContent
+{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+}
+
+.menuButton
+{
+  transition: background-color .35s ease-in-out;
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+.menuButton:hover
+{
+  background-color: #4C5C96;
+}
+
+@media screen and (max-width: 600px)
+{
+  #navbar {display: none}
+}
