@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: javiersalcedopuyo.github.io
+Token: bc296574934c2389ee47478afd049671efed86f422ec8df5f76d6279c164228d
