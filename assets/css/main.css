@@ -3430,10 +3430,10 @@ input, select, textarea {
 			-webkit-transform: translateX(0);
 			-ms-transform: translateX(0);
 			transform: translateX(0);
-			-moz-transition-delay: 0.65s;
+			/*-moz-transition-delay: 0.65s;
 			-webkit-transition-delay: 0.65s;
 			-ms-transition-delay: 0.65s;
-			transition-delay: 0.65s;
+			transition-delay: 0.65s;*/
 			-moz-filter: blur(0);
 			-webkit-filter: blur(0);
 			-ms-filter: blur(0);
@@ -3454,10 +3454,6 @@ input, select, textarea {
 			-webkit-transform: translateX(0);
 			-ms-transform: translateX(0);
 			transform: translateX(0);
-			-moz-transition-delay: 0.8s;
-			-webkit-transition-delay: 0.8s;
-			-ms-transition-delay: 0.8s;
-			transition-delay: 0.8s;
 			-moz-filter: blur(0);
 			-webkit-filter: blur(0);
 			-ms-filter: blur(0);
