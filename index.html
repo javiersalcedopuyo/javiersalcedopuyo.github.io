@@ -31,7 +31,7 @@
 
   <body class="is-preload">
 
-  <!-- Page Wrapper -->  
+  <!-- Page Wrapper -->
   <div id="page-wrapper">
 
     <!-- Header -->
@@ -63,19 +63,25 @@
           <p>
             I've worked on a wide range of projects, both personal and as part of a team.<br>
             I mainly focus on shaders and rendering techniques for personal projects.<br>
-            For the games I have developed as part of a team, I'm in charge of VFX, code optimization,
-            and production / project management.<br>
+            All games were developed alongside my ex-classmates
+            <a target="_blank" rel="noopener noreferrer" href="https://www.artstation.com/barryck">
+              Ricardo Barajas
+            </a> (art),
+            <a target="_blank" rel="noopener noreferrer" href="http://www.manuelrodriguezmatesanz.com/my-work.html">
+              Manuel Rodríguez
+            </a> (programming), and Micah Davis (design and production),
+            while I took charge of VFX, code optimization, and production / project management.<br>
 
             <h3>My Tech Stack</h3>
             I mostly use <b>C++</b> both for my current job and for my side projects.<br>
             For games, I use <b>Unity</b> and <b>C#</b>.<br>
-            I'm also very interested in <b>Rust</b>.<br>
+            I'm also learning <b>Rust</b> and <b>Qt</b>.<br>
             <br>
             Currently, as my main side project, I'm working on a toy engine made with <b>Vulkan</b>. <i>(Repo <a target="_blank" rel="noopener noreferrer" href="https://github.com/javiersalcedopuyo/VirtualPhoenixEngine">here</a>)</i>
           </p>
 
-          <!-- RENDER / SHADERS -->
-          <button class="collapsibleButton">Rendering / Shaders</button>
+          <!-- RENDERING -->
+          <button class="collapsibleButton">Rendering</button>
           <section class="features collapsibleContent">
             <!-- GENERIC RAYMARCHER -->
             <article>
@@ -129,6 +135,11 @@
               </a>
               <h3 class="major">Raymarching refraction study</h3>
               <p>A study on refraction in a Cornell Box, using my generic raymarcher shader.<br>
+                 The main additions include:
+                 <ul>
+                   <li>Faked area light (no real sampling).</li>
+                   <li>Glass material that refracts and reflects light.</li>
+                 </ul>
               </p>
               <a target="_blank" rel="noopener noreferrer"
                 href="https://www.shadertoy.com/view/ttSSzD" class="special">
@@ -145,6 +156,24 @@
               <h3 class="major">Virtual Phoenix Engine [WIP]</h3>
               <p>A toy engine made with <b>C++</b> and <b>Vulkan</b>.<br>
                  <i>Work in Progress.</i>
+                 <br>
+                 Main current features:
+                 <ul>
+                   <li>Forward rendering.</li>
+                   <li>Blinn-Phong lighting model.</li>
+                   <li>Importing of fbx and obj files.</li>
+                   <li>Multiple materials.</li>
+                   <li>Multiple ligths.</li>
+                   <li>Mouse-driven scene navigation.</li>
+                 </ul>
+
+                 Planned features:
+                 <ul>
+                   <li>Shadows.</li>
+                   <li>GUI.</li>
+                   <li>PBR shading.</li>
+                   <li>Deferred rendering.</li>
+                 </ul>
               </p>
               <a target="_blank" rel="noopener noreferrer"
                 href="https://github.com/javiersalcedopuyo/VirtualPhoenixEngine" class="special">
@@ -259,8 +288,8 @@
           </p>
 
           <ul class="actions">
-          </ul>  
-        </div>      
+          </ul>
+        </div>
       </section>
     </section>
 
@@ -270,55 +299,57 @@
       </div>
     </section>
 
-    <!-- Languages -->		
-    <section id="one" class="wrapper spotlight alt style1">		
+    <!-- Languages -->
+    <section id="one" class="wrapper spotlight alt style1">
       <div class="inner">
         <img src="images/hola.jpg" class="image" alt="" /> <!-- Photo by Jon Tyson on Unsplash -->
         <div class="content">
-          <h2 class="major">Multilingual</h2>		
+          <h2 class="major">💬 Multilingual</h2>
           <p>&#x1F1EA;&#x1F1F8; &#x1F1EC;&#x1F1E7; &#x1F1EE;&#x1F1F9; &#x1F1EB;&#x1F1F7;<br>
-             I'm a native Spanish speaker, and fluent in English. <br> 				
+             I'm a native Spanish speaker, and fluent in English. <br>
              I also speak Italian colloquially and a little bit of French.
           </p>
-        </div>	
-      </div>	
+        </div>
+      </div>
     </section>
-	
-    <!-- Professional Experience -->			
-    <section id="two" class="wrapper spotlight style2">				
-      <div class="inner">						
-        <img src="images/professional_sqr.jpg" class="image" alt="" />		
+
+    <!-- Professional Experience -->
+    <section id="two" class="wrapper spotlight style2">
+      <div class="inner">
+        <img src="images/professional_sqr.jpg" class="image" alt="" />
         <!-- Photo by Ruthson Zimmerman on Unsplash -->
-        <div class="content">					
-          <h2 class="major">Diverse professional background</h2>		
+        <div class="content">
+          <h2 class="major">Diverse professional background 💼</h2>
           <p>
             I've worked as a web developer, a graphics R&D intern, and a generalist C++ programmer.<br>
             During my bachelor degree in telecommunications I specialized in image processing,
             and later coursed a Masters in VR, Video Games and Computer Graphics,
             where I found my passion for 3D Graphics.
           </p>
-          <a href="./files/CV_JAVIER_SALCEDO_PUYO.pdf" class="special" download>Download my CV</a>
-        </div>						
-      </div>	
+          <a class="special" target="_blank" rel="noopener noreferrer"
+            href="https://docs.google.com/document/d/12SyvoZ2mp2g3FK6fyGMcFapJuIHozP6JaZJd4XW3Q3c/edit?usp=sharing">Take a look at my CV
+          </a>
+        </div>
+      </div>
     </section>
-	
-    <!-- Hobbies -->	
-    <section id="three" class="wrapper alt spotlight style3">		
-      <div class="inner">						
+
+    <!-- Hobbies -->
+    <section id="three" class="wrapper alt spotlight style3">
+      <div class="inner">
         <img class="image" src="images/mountain.jpg" alt="" /><!--Photo by Marc Rafanell López on Unsplash -->
         <div class="content">
-          <h2 class="major">Mens Sana in Corpore Sano</h2>		
+          <h2 class="major">⚜️ "Be prepared️"</h2>
           <p>
             I really enjoy reading, especially philosophy, but also fantasy and historic novels.<br>
             I've studied music since a very young age, playing both the trumpet and the guitar.<br>
-            Having grown up a boy scout in the north of Spain,<br>
+            Having grown up as a boy scout in the north of Spain,<br>
             I have developed a great love for nature and hiking.<br>
             I also practice strength sports as a member of a powerlifting club.
           </p>
-        </div>	
-      </div>	
+        </div>
+      </div>
     </section>
-	
+
     <!-- Contact -->
     <section id="footer">			
       <div class="inner">		
