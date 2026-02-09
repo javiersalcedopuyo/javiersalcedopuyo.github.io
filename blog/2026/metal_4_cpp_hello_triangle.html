@@ -1,0 +1,1782 @@
+<!doctype html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"Hello Triangle" with Metal-cpp and no ObjC.md | Exported</title>
+    <style>
+      .markdown-body {
+  --base-size-4: 0.25rem;
+  --base-size-8: 0.5rem;
+  --base-size-16: 1rem;
+  --base-text-weight-normal: 400;
+  --base-text-weight-medium: 500;
+  --base-text-weight-semibold: 600;
+  --fontStack-monospace: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  .markdown-body,
+  [data-theme="dark"] {
+    /*dark*/
+    color-scheme: dark;
+    --focus-outlineColor: #1f6feb;
+    --fgColor-default: #e6edf3;
+    --fgColor-muted: #8d96a0;
+    --fgColor-accent: #4493f8;
+    --fgColor-success: #3fb950;
+    --fgColor-attention: #d29922;
+    --fgColor-danger: #f85149;
+    --fgColor-done: #ab7df8;
+    --bgColor-default: #0d1117;
+    --bgColor-muted: #161b22;
+    --bgColor-neutral-muted: #6e768166;
+    --bgColor-attention-muted: #bb800926;
+    --borderColor-default: #30363d;
+    --borderColor-muted: #30363db3;
+    --borderColor-neutral-muted: #6e768166;
+    --borderColor-accent-emphasis: #1f6feb;
+    --borderColor-success-emphasis: #238636;
+    --borderColor-attention-emphasis: #9e6a03;
+    --borderColor-danger-emphasis: #da3633;
+    --borderColor-done-emphasis: #8957e5;
+    --color-prettylights-syntax-comment: #8b949e;
+    --color-prettylights-syntax-constant: #79c0ff;
+    --color-prettylights-syntax-constant-other-reference-link: #a5d6ff;
+    --color-prettylights-syntax-entity: #d2a8ff;
+    --color-prettylights-syntax-storage-modifier-import: #c9d1d9;
+    --color-prettylights-syntax-entity-tag: #7ee787;
+    --color-prettylights-syntax-keyword: #ff7b72;
+    --color-prettylights-syntax-string: #a5d6ff;
+    --color-prettylights-syntax-variable: #ffa657;
+    --color-prettylights-syntax-brackethighlighter-unmatched: #f85149;
+    --color-prettylights-syntax-brackethighlighter-angle: #8b949e;
+    --color-prettylights-syntax-invalid-illegal-text: #f0f6fc;
+    --color-prettylights-syntax-invalid-illegal-bg: #8e1519;
+    --color-prettylights-syntax-carriage-return-text: #f0f6fc;
+    --color-prettylights-syntax-carriage-return-bg: #b62324;
+    --color-prettylights-syntax-string-regexp: #7ee787;
+    --color-prettylights-syntax-markup-list: #f2cc60;
+    --color-prettylights-syntax-markup-heading: #1f6feb;
+    --color-prettylights-syntax-markup-italic: #c9d1d9;
+    --color-prettylights-syntax-markup-bold: #c9d1d9;
+    --color-prettylights-syntax-markup-deleted-text: #ffdcd7;
+    --color-prettylights-syntax-markup-deleted-bg: #67060c;
+    --color-prettylights-syntax-markup-inserted-text: #aff5b4;
+    --color-prettylights-syntax-markup-inserted-bg: #033a16;
+    --color-prettylights-syntax-markup-changed-text: #ffdfb6;
+    --color-prettylights-syntax-markup-changed-bg: #5a1e02;
+    --color-prettylights-syntax-markup-ignored-text: #c9d1d9;
+    --color-prettylights-syntax-markup-ignored-bg: #1158c7;
+    --color-prettylights-syntax-meta-diff-range: #d2a8ff;
+    --color-prettylights-syntax-sublimelinter-gutter-mark: #484f58;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .markdown-body,
+  [data-theme="light"] {
+    /*light*/
+    color-scheme: light;
+    --focus-outlineColor: #0969da;
+    --fgColor-default: #1f2328;
+    --fgColor-muted: #636c76;
+    --fgColor-accent: #0969da;
+    --fgColor-success: #1a7f37;
+    --fgColor-attention: #9a6700;
+    --fgColor-danger: #d1242f;
+    --fgColor-done: #8250df;
+    --bgColor-default: #ffffff;
+    --bgColor-muted: #f6f8fa;
+    --bgColor-neutral-muted: #afb8c133;
+    --bgColor-attention-muted: #fff8c5;
+    --borderColor-default: #d0d7de;
+    --borderColor-muted: #d0d7deb3;
+    --borderColor-neutral-muted: #afb8c133;
+    --borderColor-accent-emphasis: #0969da;
+    --borderColor-success-emphasis: #1a7f37;
+    --borderColor-attention-emphasis: #bf8700;
+    --borderColor-danger-emphasis: #cf222e;
+    --borderColor-done-emphasis: #8250df;
+    --color-prettylights-syntax-comment: #57606a;
+    --color-prettylights-syntax-constant: #0550ae;
+    --color-prettylights-syntax-constant-other-reference-link: #0a3069;
+    --color-prettylights-syntax-entity: #6639ba;
+    --color-prettylights-syntax-storage-modifier-import: #24292f;
+    --color-prettylights-syntax-entity-tag: #0550ae;
+    --color-prettylights-syntax-keyword: #cf222e;
+    --color-prettylights-syntax-string: #0a3069;
+    --color-prettylights-syntax-variable: #953800;
+    --color-prettylights-syntax-brackethighlighter-unmatched: #82071e;
+    --color-prettylights-syntax-brackethighlighter-angle: #57606a;
+    --color-prettylights-syntax-invalid-illegal-text: #f6f8fa;
+    --color-prettylights-syntax-invalid-illegal-bg: #82071e;
+    --color-prettylights-syntax-carriage-return-text: #f6f8fa;
+    --color-prettylights-syntax-carriage-return-bg: #cf222e;
+    --color-prettylights-syntax-string-regexp: #116329;
+    --color-prettylights-syntax-markup-list: #3b2300;
+    --color-prettylights-syntax-markup-heading: #0550ae;
+    --color-prettylights-syntax-markup-italic: #24292f;
+    --color-prettylights-syntax-markup-bold: #24292f;
+    --color-prettylights-syntax-markup-deleted-text: #82071e;
+    --color-prettylights-syntax-markup-deleted-bg: #ffebe9;
+    --color-prettylights-syntax-markup-inserted-text: #116329;
+    --color-prettylights-syntax-markup-inserted-bg: #dafbe1;
+    --color-prettylights-syntax-markup-changed-text: #953800;
+    --color-prettylights-syntax-markup-changed-bg: #ffd8b5;
+    --color-prettylights-syntax-markup-ignored-text: #eaeef2;
+    --color-prettylights-syntax-markup-ignored-bg: #0550ae;
+    --color-prettylights-syntax-meta-diff-range: #8250df;
+    --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
+  }
+}
+
+.markdown-body {
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  margin: 0;
+  color: var(--fgColor-default);
+  background-color: var(--bgColor-default);
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  scroll-behavior: auto;
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.markdown-body h1:hover .anchor .octicon-link:before,
+.markdown-body h2:hover .anchor .octicon-link:before,
+.markdown-body h3:hover .anchor .octicon-link:before,
+.markdown-body h4:hover .anchor .octicon-link:before,
+.markdown-body h5:hover .anchor .octicon-link:before,
+.markdown-body h6:hover .anchor .octicon-link:before {
+  width: 16px;
+  height: 16px;
+  content: ' ';
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+  mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' version='1.1' aria-hidden='true'><path fill-rule='evenodd' d='M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z'></path></svg>");
+}
+
+.markdown-body details,
+.markdown-body figcaption,
+.markdown-body figure {
+  display: block;
+}
+
+.markdown-body summary {
+  display: list-item;
+}
+
+.markdown-body [hidden] {
+  display: none !important;
+}
+
+.markdown-body a {
+  background-color: transparent;
+  color: var(--fgColor-accent);
+  text-decoration: none;
+}
+
+.markdown-body abbr[title] {
+  border-bottom: none;
+  -webkit-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+}
+
+.markdown-body b,
+.markdown-body strong {
+  font-weight: var(--base-text-weight-semibold, 600);
+}
+
+.markdown-body dfn {
+  font-style: italic;
+}
+
+.markdown-body h1 {
+  margin: .67em 0;
+  font-weight: var(--base-text-weight-semibold, 600);
+  padding-bottom: .3em;
+  font-size: 2em;
+  border-bottom: 1px solid var(--borderColor-muted);
+}
+
+.markdown-body mark {
+  background-color: var(--bgColor-attention-muted);
+  color: var(--fgColor-default);
+}
+
+.markdown-body small {
+  font-size: 90%;
+}
+
+.markdown-body sub,
+.markdown-body sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.markdown-body sub {
+  bottom: -0.25em;
+}
+
+.markdown-body sup {
+  top: -0.5em;
+}
+
+.markdown-body img {
+  border-style: none;
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: var(--bgColor-default);
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre,
+.markdown-body samp {
+  font-family: monospace;
+  font-size: 1em;
+}
+
+.markdown-body figure {
+  margin: 1em 40px;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  overflow: hidden;
+  background: transparent;
+  border-bottom: 1px solid var(--borderColor-muted);
+  height: .25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: var(--borderColor-default);
+  border: 0;
+}
+
+.markdown-body input {
+  font: inherit;
+  margin: 0;
+  overflow: visible;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.markdown-body [type=button],
+.markdown-body [type=reset],
+.markdown-body [type=submit] {
+  -webkit-appearance: button;
+  appearance: button;
+}
+
+.markdown-body [type=checkbox],
+.markdown-body [type=radio] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body [type=number]::-webkit-inner-spin-button,
+.markdown-body [type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+.markdown-body [type=search]::-webkit-search-cancel-button,
+.markdown-body [type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body ::-webkit-input-placeholder {
+  color: inherit;
+  opacity: .54;
+}
+
+.markdown-body ::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  appearance: button;
+  font: inherit;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+.markdown-body ::placeholder {
+  color: var(--fgColor-muted);
+  opacity: 1;
+}
+
+.markdown-body hr::before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body details summary {
+  cursor: pointer;
+}
+
+.markdown-body details:not([open])>*:not(summary) {
+  display: none;
+}
+
+.markdown-body a:focus,
+.markdown-body [role=button]:focus,
+.markdown-body input[type=radio]:focus,
+.markdown-body input[type=checkbox]:focus {
+  outline: 2px solid var(--focus-outlineColor);
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+.markdown-body a:focus:not(:focus-visible),
+.markdown-body [role=button]:focus:not(:focus-visible),
+.markdown-body input[type=radio]:focus:not(:focus-visible),
+.markdown-body input[type=checkbox]:focus:not(:focus-visible) {
+  outline: solid 1px transparent;
+}
+
+.markdown-body a:focus-visible,
+.markdown-body [role=button]:focus-visible,
+.markdown-body input[type=radio]:focus-visible,
+.markdown-body input[type=checkbox]:focus-visible {
+  outline: 2px solid var(--focus-outlineColor);
+  outline-offset: -2px;
+  box-shadow: none;
+}
+
+.markdown-body a:not([class]):focus,
+.markdown-body a:not([class]):focus-visible,
+.markdown-body input[type=radio]:focus,
+.markdown-body input[type=radio]:focus-visible,
+.markdown-body input[type=checkbox]:focus,
+.markdown-body input[type=checkbox]:focus-visible {
+  outline-offset: 0;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px var(--fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace);
+  line-height: 10px;
+  color: var(--fgColor-default);
+  vertical-align: middle;
+  background-color: var(--bgColor-muted);
+  border: solid 1px var(--borderColor-neutral-muted);
+  border-bottom-color: var(--borderColor-neutral-muted);
+  border-radius: 6px;
+  box-shadow: inset 0 -1px 0 var(--borderColor-neutral-muted);
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: var(--base-text-weight-semibold, 600);
+  line-height: 1.25;
+}
+
+.markdown-body h2 {
+  font-weight: var(--base-text-weight-semibold, 600);
+  padding-bottom: .3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid var(--borderColor-muted);
+}
+
+.markdown-body h3 {
+  font-weight: var(--base-text-weight-semibold, 600);
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-weight: var(--base-text-weight-semibold, 600);
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-weight: var(--base-text-weight-semibold, 600);
+  font-size: .875em;
+}
+
+.markdown-body h6 {
+  font-weight: var(--base-text-weight-semibold, 600);
+  font-size: .85em;
+  color: var(--fgColor-muted);
+}
+
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+  padding: 0 1em;
+  color: var(--fgColor-muted);
+  border-left: .25em solid var(--borderColor-default);
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 2em;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body tt,
+.markdown-body code,
+.markdown-body samp {
+  font-family: var(--fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace);
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: var(--fontStack-monospace, ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace);
+  font-size: 12px;
+  word-wrap: normal;
+}
+
+.markdown-body .octicon {
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-body input::-webkit-outer-spin-button,
+.markdown-body input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.markdown-body .mr-2 {
+  margin-right: var(--base-size-8, 8px) !important;
+}
+
+.markdown-body::before {
+  display: table;
+  content: "";
+}
+
+.markdown-body::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body .absent {
+  color: var(--fgColor-danger);
+}
+
+.markdown-body .anchor {
+  float: left;
+  padding-right: 4px;
+  margin-left: -20px;
+  line-height: 1;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre,
+.markdown-body details {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: var(--fgColor-default);
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1 tt,
+.markdown-body h1 code,
+.markdown-body h2 tt,
+.markdown-body h2 code,
+.markdown-body h3 tt,
+.markdown-body h3 code,
+.markdown-body h4 tt,
+.markdown-body h4 code,
+.markdown-body h5 tt,
+.markdown-body h5 code,
+.markdown-body h6 tt,
+.markdown-body h6 code {
+  padding: 0 .2em;
+  font-size: inherit;
+}
+
+.markdown-body summary h1,
+.markdown-body summary h2,
+.markdown-body summary h3,
+.markdown-body summary h4,
+.markdown-body summary h5,
+.markdown-body summary h6 {
+  display: inline-block;
+}
+
+.markdown-body summary h1 .anchor,
+.markdown-body summary h2 .anchor,
+.markdown-body summary h3 .anchor,
+.markdown-body summary h4 .anchor,
+.markdown-body summary h5 .anchor,
+.markdown-body summary h6 .anchor {
+  margin-left: -40px;
+}
+
+.markdown-body summary h1,
+.markdown-body summary h2 {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.markdown-body ul.no-list,
+.markdown-body ol.no-list {
+  padding: 0;
+  list-style-type: none;
+}
+
+.markdown-body ol[type="a s"] {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body ol[type="A s"] {
+  list-style-type: upper-alpha;
+}
+
+.markdown-body ol[type="i s"] {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ol[type="I s"] {
+  list-style-type: upper-roman;
+}
+
+.markdown-body ol[type="1"] {
+  list-style-type: decimal;
+}
+
+.markdown-body div>ol:not([type]) {
+  list-style-type: decimal;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body li+li {
+  margin-top: .25em;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: var(--base-text-weight-semibold, 600);
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body table th {
+  font-weight: var(--base-text-weight-semibold, 600);
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid var(--borderColor-default);
+}
+
+.markdown-body table td>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table tr {
+  background-color: var(--bgColor-default);
+  border-top: 1px solid var(--borderColor-muted);
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: var(--bgColor-muted);
+}
+
+.markdown-body table img {
+  background-color: transparent;
+}
+
+.markdown-body img[align=right] {
+  padding-left: 20px;
+}
+
+.markdown-body img[align=left] {
+  padding-right: 20px;
+}
+
+.markdown-body .emoji {
+  max-width: none;
+  vertical-align: text-top;
+  background-color: transparent;
+}
+
+.markdown-body span.frame {
+  display: block;
+  overflow: hidden;
+}
+
+.markdown-body span.frame>span {
+  display: block;
+  float: left;
+  width: auto;
+  padding: 7px;
+  margin: 13px 0 0;
+  overflow: hidden;
+  border: 1px solid var(--borderColor-default);
+}
+
+.markdown-body span.frame span img {
+  display: block;
+  float: left;
+}
+
+.markdown-body span.frame span span {
+  display: block;
+  padding: 5px 0 0;
+  clear: both;
+  color: var(--fgColor-default);
+}
+
+.markdown-body span.align-center {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.markdown-body span.align-center>span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: center;
+}
+
+.markdown-body span.align-center span img {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.markdown-body span.align-right {
+  display: block;
+  overflow: hidden;
+  clear: both;
+}
+
+.markdown-body span.align-right>span {
+  display: block;
+  margin: 13px 0 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.markdown-body span.align-right span img {
+  margin: 0;
+  text-align: right;
+}
+
+.markdown-body span.float-left {
+  display: block;
+  float: left;
+  margin-right: 13px;
+  overflow: hidden;
+}
+
+.markdown-body span.float-left span {
+  margin: 13px 0 0;
+}
+
+.markdown-body span.float-right {
+  display: block;
+  float: right;
+  margin-left: 13px;
+  overflow: hidden;
+}
+
+.markdown-body span.float-right>span {
+  display: block;
+  margin: 13px auto 0;
+  overflow: hidden;
+  text-align: right;
+}
+
+.markdown-body code,
+.markdown-body tt {
+  padding: .2em .4em;
+  margin: 0;
+  font-size: 85%;
+  white-space: break-spaces;
+  background-color: var(--bgColor-neutral-muted);
+  border-radius: 6px;
+}
+
+.markdown-body code br,
+.markdown-body tt br {
+  display: none;
+}
+
+.markdown-body del code {
+  text-decoration: inherit;
+}
+
+.markdown-body samp {
+  font-size: 85%;
+}
+
+.markdown-body pre code {
+  font-size: 100%;
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  color: var(--fgColor-default);
+  background-color: var(--bgColor-muted);
+  border-radius: 6px;
+}
+
+.markdown-body pre code,
+.markdown-body pre tt {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body .csv-data td,
+.markdown-body .csv-data th {
+  padding: 5px;
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 1;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.markdown-body .csv-data .blob-num {
+  padding: 10px 8px 9px;
+  text-align: right;
+  background: var(--bgColor-default);
+  border: 0;
+}
+
+.markdown-body .csv-data tr {
+  border-top: 0;
+}
+
+.markdown-body .csv-data th {
+  font-weight: var(--base-text-weight-semibold, 600);
+  background: var(--bgColor-muted);
+  border-top: 0;
+}
+
+.markdown-body [data-footnote-ref]::before {
+  content: "[";
+}
+
+.markdown-body [data-footnote-ref]::after {
+  content: "]";
+}
+
+.markdown-body .footnotes {
+  font-size: 12px;
+  color: var(--fgColor-muted);
+  border-top: 1px solid var(--borderColor-default);
+}
+
+.markdown-body .footnotes ol {
+  padding-left: 16px;
+}
+
+.markdown-body .footnotes ol ul {
+  display: inline-block;
+  padding-left: 16px;
+  margin-top: 16px;
+}
+
+.markdown-body .footnotes li {
+  position: relative;
+}
+
+.markdown-body .footnotes li:target::before {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  bottom: -8px;
+  left: -24px;
+  pointer-events: none;
+  content: "";
+  border: 2px solid var(--borderColor-accent-emphasis);
+  border-radius: 6px;
+}
+
+.markdown-body .footnotes li:target {
+  color: var(--fgColor-default);
+}
+
+.markdown-body .footnotes .data-footnote-backref g-emoji {
+  font-family: monospace;
+}
+
+.markdown-body .pl-c {
+  color: var(--color-prettylights-syntax-comment);
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: var(--color-prettylights-syntax-constant);
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: var(--color-prettylights-syntax-entity);
+}
+
+.markdown-body .pl-smi,
+.markdown-body .pl-s .pl-s1 {
+  color: var(--color-prettylights-syntax-storage-modifier-import);
+}
+
+.markdown-body .pl-ent {
+  color: var(--color-prettylights-syntax-entity-tag);
+}
+
+.markdown-body .pl-k {
+  color: var(--color-prettylights-syntax-keyword);
+}
+
+.markdown-body .pl-s,
+.markdown-body .pl-pds,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sre,
+.markdown-body .pl-sr .pl-sra {
+  color: var(--color-prettylights-syntax-string);
+}
+
+.markdown-body .pl-v,
+.markdown-body .pl-smw {
+  color: var(--color-prettylights-syntax-variable);
+}
+
+.markdown-body .pl-bu {
+  color: var(--color-prettylights-syntax-brackethighlighter-unmatched);
+}
+
+.markdown-body .pl-ii {
+  color: var(--color-prettylights-syntax-invalid-illegal-text);
+  background-color: var(--color-prettylights-syntax-invalid-illegal-bg);
+}
+
+.markdown-body .pl-c2 {
+  color: var(--color-prettylights-syntax-carriage-return-text);
+  background-color: var(--color-prettylights-syntax-carriage-return-bg);
+}
+
+.markdown-body .pl-sr .pl-cce {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-string-regexp);
+}
+
+.markdown-body .pl-ml {
+  color: var(--color-prettylights-syntax-markup-list);
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-markup-heading);
+}
+
+.markdown-body .pl-mi {
+  font-style: italic;
+  color: var(--color-prettylights-syntax-markup-italic);
+}
+
+.markdown-body .pl-mb {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-markup-bold);
+}
+
+.markdown-body .pl-md {
+  color: var(--color-prettylights-syntax-markup-deleted-text);
+  background-color: var(--color-prettylights-syntax-markup-deleted-bg);
+}
+
+.markdown-body .pl-mi1 {
+  color: var(--color-prettylights-syntax-markup-inserted-text);
+  background-color: var(--color-prettylights-syntax-markup-inserted-bg);
+}
+
+.markdown-body .pl-mc {
+  color: var(--color-prettylights-syntax-markup-changed-text);
+  background-color: var(--color-prettylights-syntax-markup-changed-bg);
+}
+
+.markdown-body .pl-mi2 {
+  color: var(--color-prettylights-syntax-markup-ignored-text);
+  background-color: var(--color-prettylights-syntax-markup-ignored-bg);
+}
+
+.markdown-body .pl-mdr {
+  font-weight: bold;
+  color: var(--color-prettylights-syntax-meta-diff-range);
+}
+
+.markdown-body .pl-ba {
+  color: var(--color-prettylights-syntax-brackethighlighter-angle);
+}
+
+.markdown-body .pl-sg {
+  color: var(--color-prettylights-syntax-sublimelinter-gutter-mark);
+}
+
+.markdown-body .pl-corl {
+  text-decoration: underline;
+  color: var(--color-prettylights-syntax-constant-other-reference-link);
+}
+
+.markdown-body [role=button]:focus:not(:focus-visible),
+.markdown-body [role=tabpanel][tabindex="0"]:focus:not(:focus-visible),
+.markdown-body button:focus:not(:focus-visible),
+.markdown-body summary:focus:not(:focus-visible),
+.markdown-body a:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+.markdown-body [tabindex="0"]:focus:not(:focus-visible),
+.markdown-body details-dialog:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.markdown-body g-emoji {
+  display: inline-block;
+  min-width: 1ch;
+  font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 1em;
+  font-style: normal !important;
+  font-weight: var(--base-text-weight-normal, 400);
+  line-height: 1;
+  vertical-align: -0.075em;
+}
+
+.markdown-body g-emoji img {
+  width: 1em;
+  height: 1em;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item label {
+  font-weight: var(--base-text-weight-normal, 400);
+}
+
+.markdown-body .task-list-item.enabled label {
+  cursor: pointer;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: var(--base-size-4);
+}
+
+.markdown-body .task-list-item .handle {
+  display: none;
+}
+
+.markdown-body .task-list-item-checkbox {
+  margin: 0 .2em .25em -1.4em;
+  vertical-align: middle;
+}
+
+.markdown-body .contains-task-list:dir(rtl) .task-list-item-checkbox {
+  margin: 0 -1.6em .25em .2em;
+}
+
+.markdown-body .contains-task-list {
+  position: relative;
+}
+
+.markdown-body .contains-task-list:hover .task-list-item-convert-container,
+.markdown-body .contains-task-list:focus-within .task-list-item-convert-container {
+  display: block;
+  width: auto;
+  height: 24px;
+  overflow: visible;
+  clip: auto;
+}
+
+.markdown-body ::-webkit-calendar-picker-indicator {
+  filter: invert(50%);
+}
+
+.markdown-body .markdown-alert {
+  padding: var(--base-size-8) var(--base-size-16);
+  margin-bottom: var(--base-size-16);
+  color: inherit;
+  border-left: .25em solid var(--borderColor-default);
+}
+
+.markdown-body .markdown-alert>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body .markdown-alert>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body .markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: var(--base-text-weight-medium, 500);
+  align-items: center;
+  line-height: 1;
+}
+
+.markdown-body .markdown-alert.markdown-alert-note {
+  border-left-color: var(--borderColor-accent-emphasis);
+}
+
+.markdown-body .markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--fgColor-accent);
+}
+
+.markdown-body .markdown-alert.markdown-alert-important {
+  border-left-color: var(--borderColor-done-emphasis);
+}
+
+.markdown-body .markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--fgColor-done);
+}
+
+.markdown-body .markdown-alert.markdown-alert-warning {
+  border-left-color: var(--borderColor-attention-emphasis);
+}
+
+.markdown-body .markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--fgColor-attention);
+}
+
+.markdown-body .markdown-alert.markdown-alert-tip {
+  border-left-color: var(--borderColor-success-emphasis);
+}
+
+.markdown-body .markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--fgColor-success);
+}
+
+.markdown-body .markdown-alert.markdown-alert-caution {
+  border-left-color: var(--borderColor-danger-emphasis);
+}
+
+.markdown-body .markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--fgColor-danger);
+}
+
+.markdown-body>*:first-child>.heading-element:first-child {
+  margin-top: 0 !important;
+}
+
+      
+.markdown-body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+}
+
+@media (max-width: 767px) {
+  .markdown-body {
+    padding: 15px;
+  }
+}
+    </style>
+  </head>
+  <body class="markdown-body">
+
+    <header id="header">
+      <h3><a href="../"> < Back </a></h1>
+    </header>
+
+    📅 04-Feb-2026
+
+    <h1 data-heading="Writing a &quot;Hello, Triangle!&quot; with Metal 4 and exclusively C++" dir="auto">Writing a "Hello, Triangle!" with Metal 4 and exclusively C++</h1>
+<p dir="auto">This article will serve as both a tutorial for those who don't want to have to deal with ObjC, and as a demonstration of how I work with my own custom C++ build system "Dedalo".</p>
+<p dir="auto">You can find the source code <a href="https://github.com/javiersalcedopuyo/metal-4-with-only-cpp/tree/main/code">here</a>.</p>
+<h2 data-heading="Table of contents" dir="auto">Table of contents</h3>
+<ul>
+    <li> The Build System </li>
+    <li> Sorting out dependencies </li>
+    <li> Hello, Triangle!
+        <ul>
+            <li>Creating the window</li>
+            <li>Initialising Metal</li>
+            <li>Command Queue, Buffer and Allocators</li>
+            <li>Frame Synchronisation and Presentation</li>
+            <li>Encoding commands</li>
+            <li>The Pipeline and Shaders</li>
+            <li>DRAW!</li>
+            <li>BONUS: Using a proper Vertex Buffer
+                <ul>
+                    <li>Argument Tables</li>
+                    <li>Residency Sets</li>
+                    <li>Creating the Vertex Buffer(s)</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+<h2 data-heading="The build system" dir="auto">The build system</h2>
+<p dir="auto"><a data-tooltip-position="top" aria-label="https://github.com/javiersalcedopuyo/dedalo" rel="noopener nofollow" class="external-link" href="https://github.com/javiersalcedopuyo/dedalo" target="_blank">Dedalo</a> is a strongly opinionated C++ build system, inspired by Swift and Zig.<br>
+The goal is to have a build system that doesn't require anything other than a C++ compiler and C++ code to work, no need to install anything, nor to learn a different bespoke language.</p>
+<p dir="auto">You <em>can</em> install Dedalo by copying the binary and cpp file in the appropriate paths (or using <code>make install</code>), but you can also distribute it with your program, so you don't need to worry about versioning. It's just a single cpp file with no dependencies other than the STL. The only thing needed to build a C++ project with Dedalo is a C++ compiler that supports C++20.</p>
+<h3 data-heading="Getting started" dir="auto">Getting started</h3>
+<ol>
+<li dir="auto">Create a new directory and place <code>dedalo.cpp</code> in there.</li>
+<li dir="auto">Compile it like this <code>clang++ -std=c++20 -O3 dedalo.cpp -o ddl</code>
+<ol>
+<li dir="auto">If you want logs, add <code>-DENABLE_LOGS</code></li>
+</ol>
+</li>
+<li dir="auto">Initialise the project like this <code>./ddl init</code></li>
+</ol>
+<p dir="auto">You should now have a file structure like this:</p>
+<pre><code>├── build
+│&nbsp;&nbsp; ├── cache
+│&nbsp;&nbsp; │&nbsp;&nbsp; └── lto
+│&nbsp;&nbsp; └── obj
+├── build.cpp
+├── ddl
+├── dedalo.cpp
+├── lib
+└── src
+    └── main.cpp
+</code></pre>
+<p dir="auto">If you run it like this <code>./ddl run</code> you should get a "Hello, World!" message.</p>
+<hr>
+<h2 data-heading="Sorting out the dependencies" dir="auto">Sorting out the dependencies</h2>
+<h3 data-heading="GLFW" dir="auto">GLFW</h3>
+<p dir="auto">To keep it simple, I'll be using <a data-tooltip-position="top" aria-label="https://github.com/glfw/glfw" rel="noopener nofollow" class="external-link" href="https://github.com/glfw/glfw" target="_blank">GLFW</a> for the window management. Please refer to their website to see how to install it.<br>
+Since it's a dynamic system library (in my case in <code>/usr/local/include/GLFW</code>), adding it to the project is very easy:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// build.cpp</span>
+<span class="token keyword">void</span> <span class="token function">build</span><span class="token punctuation">(</span> Project<span class="token operator">*</span> project<span class="token punctuation">,</span> <span class="token keyword">const</span> MainArgvSlice args <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">assert</span><span class="token punctuation">(</span> project <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token operator">*</span>project <span class="token operator">=</span> <span class="token function">Project</span><span class="token punctuation">(</span>
+    <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"metal-4-only-cpp"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>dependencies <span class="token operator">=</span>
+        <span class="token punctuation">{</span>
+            <span class="token punctuation">{</span> <span class="token string">"glfw"</span> <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 data-heading="Apple Frameworks" dir="auto">Apple Frameworks</h3>
+<p dir="auto">The official metal-cpp headers are incomplete, but there're workarounds. Just get <a data-tooltip-position="top" aria-label="https://github.com/javiersalcedopuyo/metal-cpp-headers" rel="noopener nofollow" class="external-link" href="https://github.com/javiersalcedopuyo/metal-cpp-headers" target="_blank">this repo</a> and copy it into <code>./lib</code>:</p>
+<pre><code>├── dedalo.cpp
+├── ddl
+├── build.cpp
+├── lib
+│&nbsp;&nbsp; ├── AppKit
+│&nbsp;&nbsp; ├── Foundation
+│&nbsp;&nbsp; ├── Metal
+│&nbsp;&nbsp; ├── MetalFX
+│&nbsp;&nbsp; ├── MetalKit
+│&nbsp;&nbsp; └── QuartzCore
+└── src
+    └── main.hpp
+</code></pre>
+<p dir="auto">Now just add them to the <code>build.cpp</code>, and disable the <code>gnu-anonymous-struct</code> and <code>nested-anon-types</code> warnings:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// build.cpp</span>
+<span class="token operator">*</span>project <span class="token operator">=</span> <span class="token function">Project</span><span class="token punctuation">(</span>
+<span class="token punctuation">{</span>
+	<span class="token punctuation">.</span>name <span class="token operator">=</span> <span class="token string">"metal-4-only-cpp"</span><span class="token punctuation">,</span>
+	<span class="token punctuation">.</span>dependencies <span class="token operator">=</span>
+	<span class="token punctuation">{</span>
+		<span class="token punctuation">{</span> <span class="token string">"glfw"</span> <span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token punctuation">.</span>frameworks <span class="token operator">=</span>
+	<span class="token punctuation">{</span>
+		<span class="token punctuation">{</span> <span class="token string">"AppKit"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"Foundation"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"QuartzCore"</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token string">"Metal"</span> <span class="token punctuation">}</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+	<span class="token punctuation">.</span>common_compiler_flags <span class="token operator">=</span>
+	<span class="token punctuation">{</span>
+		<span class="token comment">// metal-cpp needs these</span>
+		<span class="token string">"Wno-gnu-anonymous-struct"</span><span class="token punctuation">,</span>
+		<span class="token string">"Wno-nested-anon-types"</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 data-heading="Hello, Triangle!" dir="auto">Hello, Triangle!</h2>
+<p dir="auto">From now on, I'll use some custom pieces of code that I won't explain here but you can find in the <code>utils.hpp</code> file, like a <code>defer</code> macro or renaming some types.</p>
+<p dir="auto">For brevity, I'm also going to assume no errors can happen, so I won't check or assert results.</p>
+<p dir="auto">After initialising the Metal device and creating the window, I'll be following <a data-tooltip-position="top" aria-label="https://developer.apple.com/documentation/metal/drawing-a-triangle-with-metal-4" rel="noopener nofollow" class="external-link" href="https://developer.apple.com/documentation/metal/drawing-a-triangle-with-metal-4" target="_blank">this article</a> from Apple, but using C++ instead of ObjC.</p>
+<h3 data-heading="Creating the window" dir="auto">Creating the window</h3>
+<p dir="auto">This is the same as with any other GLFW app. Just remember to define <code>GFW_EXPOSE_NATIVE_COCOA</code>:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">GLFW_INCLUDE_NONE</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;GLFW/glfw3.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">GFW_EXPOSE_NATIVE_COCOA</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;GLFW/glfw3native.h&gt;</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"utils.hpp"</span></span>
+
+<span class="token keyword">static</span> <span class="token keyword">constexpr</span> u32 WIN_WIDTH  <span class="token operator">=</span> <span class="token number">800</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">constexpr</span> u32 WIN_HEIGHT <span class="token operator">=</span> <span class="token number">600</span><span class="token punctuation">;</span>
+
+i32 <span class="token function">main</span><span class="token punctuation">(</span> i32 argc<span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span> argv<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">glfwInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">glfwWindowHint</span><span class="token punctuation">(</span> GLFW_CLIENT_API<span class="token punctuation">,</span> GLFW_NO_API <span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Because GLFW wasn't designed to work with Metal</span>
+    GLFWwindow<span class="token operator">*</span> glfw_window <span class="token operator">=</span> <span class="token function">glfwCreateWindow</span><span class="token punctuation">(</span> WIN_WIDTH<span class="token punctuation">,</span> WIN_HEIGHT<span class="token punctuation">,</span> <span class="token string">"Metal Only C++"</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">defer</span><span class="token punctuation">(</span> <span class="token function">glfwDestroyWindow</span><span class="token punctuation">(</span> glfw_window <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span> <span class="token operator">!</span><span class="token function">glfwWindowShouldClose</span><span class="token punctuation">(</span> glfw_window <span class="token punctuation">)</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">glfwPollEvents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// ...</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p dir="auto">If you run the program now you should get an empty window:<br>
+<span alt="blank_window.png" src="blank_window.png" class="internal-embed media-embed image-embed is-loaded"><img alt="blank_window.png" src="img/blank_window.png"></span></p>
+<h3 data-heading="Initialising Metal" dir="auto">Initialising Metal</h3>
+<h4 data-heading="Creating the Metal device and layer" dir="auto">Creating the Metal device and layer</h4>
+<p dir="auto">We need the device to issue commands, and the layer to connect with the GLFW window.</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// ...</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MTL_PRIVATE_IMPLEMENTATION</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">NS_PRIVATE_IMPLEMENTATION</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Metal/Metal.hpp"</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">CA_PRIVATE_IMPLEMENTATION</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"QuartzCore/QuartzCore.hpp"</span></span>
+<span class="token comment">// ...</span>
+<span class="token keyword">static</span> <span class="token keyword">constexpr</span> <span class="token keyword">auto</span> MAX_FRAMES_IN_FLIGHT <span class="token operator">=</span> <span class="token number">3u</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">constexpr</span> <span class="token keyword">auto</span> PIXEL_FORMAT         <span class="token operator">=</span> MTL<span class="token double-colon punctuation">::</span>PixelFormatBGRA8Unorm_sRGB<span class="token punctuation">;</span>
+<span class="token comment">// ...</span>
+	MTL<span class="token double-colon punctuation">::</span><span class="token type-opencl-host-cpp keyword">Device</span><span class="token operator">*</span>    device      <span class="token operator">=</span> <span class="token class-name">MTL</span><span class="token double-colon punctuation">::</span><span class="token function">CreateSystemDefaultDevice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	CA<span class="token double-colon punctuation">::</span>MetalLayer<span class="token operator">*</span> metal_layer <span class="token operator">=</span> CA<span class="token double-colon punctuation">::</span><span class="token class-name">MetalLayer</span><span class="token double-colon punctuation">::</span><span class="token function">layer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">{</span>
+        metal_layer<span class="token operator">-&gt;</span><span class="token function">setDevice</span><span class="token punctuation">(</span> device <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        metal_layer<span class="token operator">-&gt;</span><span class="token function">setPixelFormat</span><span class="token punctuation">(</span> PIXEL_FORMAT <span class="token punctuation">)</span><span class="token punctuation">;</span>
+        metal_layer<span class="token operator">-&gt;</span><span class="token function">setMaximumDrawableCount</span><span class="token punctuation">(</span> MAX_FRAMES_IN_FLIGHT <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+	<span class="token comment">// ...</span>
+	<span class="token comment">// Create the GLFW window</span>
+	<span class="token comment">// ...</span>
+	<span class="token punctuation">{</span>
+	    <span class="token keyword">auto</span><span class="token operator">*</span> metal_window <span class="token operator">=</span> <span class="token generic-function"><span class="token function">reinterpret_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span> NS<span class="token double-colon punctuation">::</span>Window<span class="token operator">*</span> <span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span> <span class="token function">glfwGetCocoaWindow</span><span class="token punctuation">(</span> glfw_window <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    NS<span class="token double-colon punctuation">::</span>View<span class="token operator">*</span> view <span class="token operator">=</span> metal_window<span class="token operator">-&gt;</span><span class="token function">contentView</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    view<span class="token operator">-&gt;</span><span class="token function">setLayer</span><span class="token punctuation">(</span> metal_layer <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    view<span class="token operator">-&gt;</span><span class="token function">setWantsLayer</span><span class="token punctuation">(</span> <span class="token boolean">true</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token comment">// ...</span>
+</code></pre>
+<h4 data-heading="Set up the GLFW window to work with Metal" dir="auto">Set up the GLFW window to work with Metal</h4>
+<p dir="auto">Now that we have both the window and the Metal device/layer, we can link them together so Metal knows where to present.<br>
+To do that, we need to get the view of the GLFW window's underlying Cocoa window:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token keyword">auto</span><span class="token operator">*</span> metal_window <span class="token operator">=</span> <span class="token generic-function"><span class="token function">reinterpret_cast</span><span class="token generic class-name"><span class="token operator">&lt;</span> NS<span class="token double-colon punctuation">::</span>Window<span class="token operator">*</span> <span class="token operator">&gt;</span></span></span><span class="token punctuation">(</span> <span class="token function">glfwGetCocoaWindow</span><span class="token punctuation">(</span> glfw_window <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+NS<span class="token double-colon punctuation">::</span>View<span class="token operator">*</span> view <span class="token operator">=</span> metal_window<span class="token operator">-&gt;</span><span class="token function">contentView</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+view<span class="token operator">-&gt;</span><span class="token function">setLayer</span><span class="token punctuation">(</span> metal_layer <span class="token punctuation">)</span><span class="token punctuation">;</span>
+view<span class="token operator">-&gt;</span><span class="token function">setWantsLayer</span><span class="token punctuation">(</span> <span class="token boolean">true</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h3 data-heading="Command Queue, Buffer and Allocators" dir="auto">Command Queue, Buffer and Allocators</h3>
+<p dir="auto">Metal 4 changes a bit how commands work:<br>
+<span alt="metal4_cmd_management.png" src="metal4_cmd_management.png" class="internal-embed media-embed image-embed is-loaded"><img alt="metal4_cmd_management.png" src="img/metal4_cmd_management.png"></span><br>
+You can watch <a data-tooltip-position="top" aria-label="https://developer.apple.com/videos/play/wwdc2025/205/?time=104" rel="noopener nofollow" class="external-link" href="https://developer.apple.com/videos/play/wwdc2025/205/?time=104" target="_blank">this video</a> to learn more.</p>
+<p dir="auto">In Metal 3, command buffers were created from their queues, but in Metal 4 you can create them independently and commit multiple of them at once to a queue later.<br>
+They can also be reused, which is why it's a single member variable of the renderer and not a temporary object created per frame like on Metal 3.</p>
+<p dir="auto">Metal 4 also introduces command allocators, that manage the memory necessary for the encoded commands.<br>
+While the buffer can be reused, each frame needs its own allocator, so we'll make an array of 3, 1 for each frame in flight.</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// In the Renderer struct/class</span>
+MTL4<span class="token double-colon punctuation">::</span><span class="token type-opencl-host-cpp keyword">CommandQueue</span><span class="token operator">*</span>  cmd_queue  <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+MTL4<span class="token double-colon punctuation">::</span>CommandBuffer<span class="token operator">*</span> cmd_buf    <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+Array<span class="token operator">&lt;</span> MTL4<span class="token double-colon punctuation">::</span>CommandAllocator<span class="token operator">*</span><span class="token punctuation">,</span> MAX_FRAMES_IN_FLIGHT <span class="token operator">&gt;</span> cmd_allocators<span class="token punctuation">;</span>
+
+<span class="token comment">// In the initialisation:</span>
+cmd_queue <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newMTL4CommandQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+cmd_buf   <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newCommandBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token keyword">auto</span><span class="token operator">&amp;</span> alloc<span class="token operator">:</span> cmd_allocators <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	alloc <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newCommandAllocator</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h3 data-heading="Frame Synchronisation and Presentation" dir="auto">Frame Synchronisation and Presentation</h3>
+<p dir="auto">Each frame, before getting the appropriate per-frame objects (vertex buffer, command allocator, ...), we need to make sure the GPU has finished work with at least one of the frames in-flight.<br>
+To do that we'll use a <a data-tooltip-position="top" aria-label="https://developer.apple.com/documentation/metal/mtlsharedevent" rel="noopener nofollow" class="external-link" href="https://developer.apple.com/documentation/metal/mtlsharedevent" target="_blank">Shared Event</a>, an object used to synchronise operations between the CPU and the GPU (like Vulkan Fences).</p>
+<p dir="auto">We need to keep the event itself, and also a count of all the frames rendered so far:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// In the Renderer struct/class</span>
+MTL<span class="token double-colon punctuation">::</span>SharedEvent<span class="token operator">*</span>    frame_available_shared_event <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+size_t               frame_num                    <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">The even can be created like this:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded">frame_available_shared_event <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newSharedEvent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+frame_available_shared_event<span class="token operator">-&gt;</span><span class="token function">setSignaledValue</span><span class="token punctuation">(</span> <span class="token number">0</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">Shared Events work this way:</p>
+<ol>
+<li dir="auto">The GPU sets a predetermined value (signalling) once the work is done. We do this on the command queue after we've finished encoding command buffers:</li>
+</ol>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// ... encoding command buffers ...</span>
+<span class="token comment">// ... presenting drawable ...</span>
+cmd_queue<span class="token operator">-&gt;</span><span class="token function">signalEvent</span><span class="token punctuation">(</span> frame_available_shared_event<span class="token punctuation">,</span> frame_num <span class="token punctuation">)</span>
+frame_num<span class="token operator">++</span><span class="token punctuation">;</span>
+<span class="token comment">// Done for this frame</span>
+</code></pre>
+<ol start="2">
+<li dir="auto">The CPU waits until the event has that value. Because we have 3 frames in flight, we wait for the one 3 frames ago to be done. We do this before we start encoding commands.</li>
+</ol>
+<pre class="language-cpp"><code class="language-cpp is-loaded">frame_available_shared_event<span class="token operator">-&gt;</span><span class="token function">waitUntilSignaledValue</span><span class="token punctuation">(</span>
+	frame_num <span class="token operator">-</span> MAX_FRAMES_IN_FLIGHT<span class="token punctuation">,</span>
+	timeout_in_ms <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+<span class="token comment">// Now we can safely access this frame's triple-buffered resources</span>
+<span class="token keyword">const</span> u8 frame_idx <span class="token operator">=</span> frame_num <span class="token operator">%</span> MAX_FRAMES_IN_FLIGHT<span class="token punctuation">;</span>
+MTL4<span class="token double-colon punctuation">::</span>CommandAllocator<span class="token operator">*</span> cmd_alloc <span class="token operator">=</span> cmd_allocators<span class="token punctuation">[</span> frame_idx <span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">// ...</span>
+</code></pre>
+<p dir="auto">Before we can present the results of a frame, we first need to get the next drawable, and the queue will have to explicitly synchronise with it. This is a bit more verbose than Metal 3, where you could just encode a <code>presentDrawable</code> command directly on the command buffer.<br>
+But it's not that complex either.</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded">MTL<span class="token double-colon punctuation">::</span>Drawable<span class="token operator">*</span> surface <span class="token operator">=</span> metal_layer<span class="token operator">-&gt;</span><span class="token function">nextDrawable</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// According to the documentation you *must* do it in this exact order</span>
+cmd_queue<span class="token operator">-&gt;</span><span class="token function">wait</span><span class="token punctuation">(</span> surface <span class="token punctuation">)</span><span class="token punctuation">;</span>
+cmd_queue<span class="token operator">-&gt;</span><span class="token function">commit</span><span class="token punctuation">(</span> <span class="token operator">&amp;</span>cmd_buf<span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+cmd_queue<span class="token operator">-&gt;</span><span class="token function">signalDrawable</span><span class="token punctuation">(</span> surface <span class="token punctuation">)</span><span class="token punctuation">;</span>
+surface<span class="token operator">-&gt;</span><span class="token function">present</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">If you run it now it would crash because we haven't set up the command buffer.<br>
+Just so we can get something on the screen, we'll set it up with no actual commands encoded.<br>
+The command buffer(s) frame workflow is pretty straightforward, you begin it, encode commands in it, and end it:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded">cmd_buf<span class="token operator">-&gt;</span><span class="token function">beginCommandBuffer</span><span class="token punctuation">(</span> cmd_alloc <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// We'll encode commands here later...</span>
+cmd_buf<span class="token operator">-&gt;</span><span class="token function">endCommandBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">Now, if you compile and run it, you should get a fully opaque black window:<br>
+<span alt="black_window.png" src="black_window.png" class="internal-embed media-embed image-embed is-loaded"><img alt="black_window.png" src="img/black_window.png"></span></p>
+<h3 data-heading="Encoding commands" dir="auto">Encoding commands</h3>
+<h4 data-heading="Render pass and encoder" dir="auto">Render pass and encoder</h4>
+<p dir="auto">A Render Pass is essentially a group of commands that share the same outputs (attachments).<br>
+You can configure a bunch of settings and fixed function operations for each of the attachments, but let's get started by clearing the surface with a given color (magenta in this example):</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// First we create the pass descriptor...</span>
+<span class="token keyword">auto</span><span class="token operator">*</span> pass_desc <span class="token operator">=</span> MTL4<span class="token double-colon punctuation">::</span><span class="token class-name">RenderPassDescriptor</span><span class="token double-colon punctuation">::</span><span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">defer</span><span class="token punctuation">(</span> pass_desc<span class="token operator">-&gt;</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// ...then we setup its first color attachment</span>
+MTL<span class="token double-colon punctuation">::</span>RenderPassColorAttachmentDescriptor<span class="token operator">*</span> color_attachment <span class="token operator">=</span> pass_desc<span class="token operator">-&gt;</span><span class="token function">colorAttachments</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">object</span><span class="token punctuation">(</span> <span class="token number">0</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+color_attachment<span class="token operator">-&gt;</span><span class="token function">setTexture</span><span class="token punctuation">(</span> surface<span class="token operator">-&gt;</span><span class="token function">texture</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+color_attachment<span class="token operator">-&gt;</span><span class="token function">setClearColor</span><span class="token punctuation">(</span> MTL<span class="token double-colon punctuation">::</span><span class="token class-name">ClearColor</span><span class="token double-colon punctuation">::</span><span class="token function">Make</span><span class="token punctuation">(</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">0.0</span> <span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">We also need to tell Metal what to do before (load) and after (store) it starts rendering to this attachment.<br>
+We just want to clear it to the given color and then store it to be used in future passes, but there're other options if you need to preserve the previous contents, or if you don't care about them:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded">color_attachment<span class="token operator">-&gt;</span><span class="token function">setLoadAction</span> <span class="token punctuation">(</span> MTL<span class="token double-colon punctuation">::</span>LoadActionClear  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+color_attachment<span class="token operator">-&gt;</span><span class="token function">setStoreAction</span><span class="token punctuation">(</span> MTL<span class="token double-colon punctuation">::</span>StoreActionStore <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">Finally we need to encode the pass into the command buffer. To do that we'll need Command Encoders. They configure the render pipeline, and set up resources for draw calls.<br>
+From the <a data-tooltip-position="top" aria-label="https://developer.apple.com/documentation/metal/understanding-the-metal-4-core-api" rel="noopener nofollow" class="external-link" href="https://developer.apple.com/documentation/metal/understanding-the-metal-4-core-api" target="_blank">docs</a>:</p>
+<blockquote dir="auto">
+<p>The most important difference with Metal 4 encoders is that they don’t have methods that bind individual buffers, textures, and heaps. Instead, you configure the resource bindings in an argument table and then bind that table to one or more pipeline stages with a command encoder</p>
+</blockquote>
+<p dir="auto">There're more differences specific for <em>render</em> command encoders, but I won't get into those here because they're not relevant for a simple "Hello, Triangle!".</p>
+<p dir="auto">We'll create the encoder and leave it empty for now:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded">MTL4<span class="token double-colon punctuation">::</span>RenderCommandEncoder<span class="token operator">*</span> encoder <span class="token operator">=</span> cmd_buf<span class="token operator">-&gt;</span><span class="token function">renderCommandEncoder</span><span class="token punctuation">(</span> pass_desc <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">defer</span><span class="token punctuation">(</span> encoder<span class="token operator">-&gt;</span><span class="token function">endEncoding</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">Once we're done with that, we need to end the command buffer, commit it to the queue, and present it; like we already did in the "Frame Synchronisation" section.</p>
+<p dir="auto">If you run it now you should get a magenta window:<br>
+<span alt="magenta_window.png" src="magenta_window.png" class="internal-embed media-embed image-embed is-loaded"><img alt="magenta_window.png" src="img/magenta_window.png"></span></p>
+<h3 data-heading="The Pipeline and Shaders" dir="auto">The Pipeline and Shaders</h3>
+<h4 data-heading="The Metal 4 Compiler" dir="auto">The Metal 4 Compiler</h4>
+<p dir="auto">Metal 4 introduces a new class that can compile both shaders and PSOs: <code>MTL4::Compiler</code>.<br>
+We only need it when we build the PSO, so (for this example) it doesn't need to be a member or anything:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// In the initialisation:</span>
+MTL4<span class="token double-colon punctuation">::</span>Compiler<span class="token operator">*</span> compiler<span class="token punctuation">;</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">auto</span><span class="token operator">*</span> compiler_desc <span class="token operator">=</span> MTL4<span class="token double-colon punctuation">::</span><span class="token class-name">CompilerDescriptor</span><span class="token double-colon punctuation">::</span><span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">defer</span><span class="token punctuation">(</span> compiler_desc<span class="token operator">-&gt;</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	compiler <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newCompiler</span><span class="token punctuation">(</span> compiler_desc<span class="token punctuation">,</span> <span class="token keyword">nullptr</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 data-heading="The Shaders and Library" dir="auto">The Shaders and Library</h4>
+<p dir="auto">For now we'll hardcode the vertex positions and colors in the shader.</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// src/shaders/triangle.metal</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;metal_stdlib&gt;</span></span>
+
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> metal<span class="token punctuation">;</span>
+
+constant float4 positions<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+<span class="token punctuation">{</span>
+    <span class="token punctuation">{</span>  <span class="token number">0.0</span><span class="token punctuation">,</span>  <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>  <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+constant float4 colors<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span>
+<span class="token punctuation">{</span>
+    <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">VertexOut</span>
+<span class="token punctuation">{</span>
+    float4 position <span class="token punctuation">[</span><span class="token punctuation">[</span>position<span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    float4 color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+vertex
+VertexOut <span class="token function">vertex_shader</span><span class="token punctuation">(</span> uint id <span class="token punctuation">[</span><span class="token punctuation">[</span>vertex_id<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span>
+    <span class="token punctuation">{</span>
+        <span class="token punctuation">.</span>position <span class="token operator">=</span> positions<span class="token punctuation">[</span> id <span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">.</span>color    <span class="token operator">=</span> colors<span class="token punctuation">[</span> id <span class="token punctuation">]</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+fragment
+float4 <span class="token function">fragment_shader</span><span class="token punctuation">(</span> <span class="token keyword">const</span> VertexOut in <span class="token punctuation">[</span><span class="token punctuation">[</span>stage_in<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> in<span class="token punctuation">.</span>color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p dir="auto">You can compile it like this:</p>
+<pre class="language-bash"><code class="language-bash is-loaded"><span class="token comment"># compile individual shader</span>
+$ xcrun metal <span class="token parameter variable">-c</span> src/shaders/triangle.metal <span class="token parameter variable">-o</span> build/bin/shaders/triangle.air
+<span class="token comment"># link into a library</span>
+$ xcrun metal <span class="token parameter variable">-o</span> /build/bin/shaders/shaders.metallib build/bin/shaders/*.air 
+</code></pre>
+<p dir="auto">I added it to the <code>build.cpp</code> as a post build script.</p>
+<p dir="auto">You could also use the new <code>MTL4::Compiler</code> we created before to compile the shaders on runtime (learn more <a data-tooltip-position="top" aria-label="https://developer.apple.com/documentation/metal/mtl4compiler/makelibrary(descriptor:)" rel="noopener nofollow" class="external-link" href="https://developer.apple.com/documentation/metal/mtl4compiler/makelibrary(descriptor:)" target="_blank">here</a>), but I prefer to compile them offline.</p>
+<p dir="auto">A shader library contains the project's shaders, now it's the time to create one. Many tutorials use the "default library", but that requires using Xcode bundles and other complications that I'm actively trying to avoid here.</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// In the Renderer struct/class</span>
+MTL<span class="token double-colon punctuation">::</span>Library<span class="token operator">*</span> shader_lib <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+<span class="token comment">// In the initialisation:</span>
+shader_lib <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newLibrary</span><span class="token punctuation">(</span> <span class="token function">ns_str</span><span class="token punctuation">(</span> <span class="token string">"build/bin/shaders/shaders.metallib"</span> <span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">nullptr</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">On Metal 3 you could now create <code>MTL::Function</code> objects from the library to pass them to the PSO descriptor.<br>
+Metal 4 does things slightly differently. The new PSO descriptor requires <code>MTL4::LibraryFunctionDescriptor</code>  that have the library as a member:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// Metal 3</span>
+<span class="token keyword">auto</span><span class="token operator">*</span> vert_shader <span class="token operator">=</span> shader_lib<span class="token operator">-&gt;</span><span class="token function">newFunction</span><span class="token punctuation">(</span> <span class="token function">ns_str</span><span class="token punctuation">(</span> <span class="token string">"vertex_shader"</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">auto</span><span class="token operator">*</span> frag_shader <span class="token operator">=</span> shader_lib<span class="token operator">-&gt;</span><span class="token function">newFunction</span><span class="token punctuation">(</span> <span class="token function">ns_str</span><span class="token punctuation">(</span> <span class="token string">"fragment_shader"</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">// Metal 4</span>
+<span class="token keyword">auto</span><span class="token operator">*</span> vertex_fun <span class="token operator">=</span> MTL4<span class="token double-colon punctuation">::</span><span class="token class-name">LibraryFunctionDescriptor</span><span class="token double-colon punctuation">::</span><span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+vertex_fun<span class="token operator">-&gt;</span><span class="token function">setLibrary</span><span class="token punctuation">(</span> shader_lib <span class="token punctuation">)</span><span class="token punctuation">;</span>
+vertex_fun<span class="token operator">-&gt;</span><span class="token function">setName</span><span class="token punctuation">(</span> <span class="token function">ns_str</span><span class="token punctuation">(</span> <span class="token string">"vertex_shader"</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">auto</span><span class="token operator">*</span> fragment_fun <span class="token operator">=</span> MTL4<span class="token double-colon punctuation">::</span><span class="token class-name">LibraryFunctionDescriptor</span><span class="token double-colon punctuation">::</span><span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+fragment_fun<span class="token operator">-&gt;</span><span class="token function">setLibrary</span><span class="token punctuation">(</span> shader_lib <span class="token punctuation">)</span><span class="token punctuation">;</span>
+fragment_fun<span class="token operator">-&gt;</span><span class="token function">setName</span><span class="token punctuation">(</span> <span class="token function">ns_str</span><span class="token punctuation">(</span> <span class="token string">"fragment_shader"</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">Metal 3 was nicer to use imo, but I'm guessing the reasoning behind the new system is so everything is done at once by the <code>MTL4::Compiler</code> when it creates the PSO.</p>
+<h4 data-heading="The PSO" dir="auto">The PSO</h4>
+<p dir="auto">We now have everything we need to create the PSO.<br>
+It's pretty straightforward, and the only difference from Metal 3 is that we now do it through the compiler instead of through the device:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// In the Renderer struct/class:</span>
+MTL<span class="token double-colon punctuation">::</span>RenderPipelineState<span class="token operator">*</span> pso <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+<span class="token comment">// In the initialisation:</span>
+<span class="token keyword">auto</span><span class="token operator">*</span> desc <span class="token operator">=</span> MTL4<span class="token double-colon punctuation">::</span><span class="token class-name">RenderPipelineDescriptor</span><span class="token double-colon punctuation">::</span><span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">defer</span><span class="token punctuation">(</span> desc<span class="token operator">-&gt;</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+desc<span class="token operator">-&gt;</span><span class="token function">setLabel</span><span class="token punctuation">(</span> <span class="token function">ns_str</span><span class="token punctuation">(</span> <span class="token string">"Hello Triangle PSO"</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+desc<span class="token operator">-&gt;</span><span class="token function">colorAttachments</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">object</span><span class="token punctuation">(</span> <span class="token number">0</span> <span class="token punctuation">)</span><span class="token operator">-&gt;</span><span class="token function">setPixelFormat</span><span class="token punctuation">(</span> PIXEL_FORMAT <span class="token punctuation">)</span><span class="token punctuation">;</span>
+desc<span class="token operator">-&gt;</span><span class="token function">setVertexFunctionDescriptor</span><span class="token punctuation">(</span> vertex_fun <span class="token punctuation">)</span><span class="token punctuation">;</span>
+desc<span class="token operator">-&gt;</span><span class="token function">setFragmentFunctionDescriptor</span><span class="token punctuation">(</span> fragment_fun <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+pso <span class="token operator">=</span> compiler<span class="token operator">-&gt;</span><span class="token function">newRenderPipelineState</span><span class="token punctuation">(</span> desc<span class="token punctuation">,</span> <span class="token punctuation">(</span>MTL4<span class="token double-colon punctuation">::</span>CompilerTaskOptions<span class="token operator">*</span><span class="token punctuation">)</span><span class="token keyword">nullptr</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>NS<span class="token double-colon punctuation">::</span>Error<span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token keyword">nullptr</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">You can also provide a <code>MTL4::CompilerTaskOptions</code> with an array of archives that can be used to speed up compilation, but I'm skipping that for this example.</p>
+<h3 data-heading="DRAW!" dir="auto">DRAW!</h3>
+<p dir="auto">We are ready!<br>
+Head back to the command encoder, set the PSO, and add the drawcall:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded">encoder<span class="token operator">-&gt;</span><span class="token function">setRenderPipelineState</span><span class="token punctuation">(</span> pso <span class="token punctuation">)</span><span class="token punctuation">;</span>
+encoder<span class="token operator">-&gt;</span><span class="token function">drawPrimitives</span><span class="token punctuation">(</span> MTL<span class="token double-colon punctuation">::</span>PrimitiveTypeTriangle<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">I also changed the clear color to a calmer grey.</p>
+<p dir="auto">If you now run it you should get something like this:<br>
+<span alt="hello_triangle.png" src="hello_triangle.png" class="internal-embed media-embed image-embed is-loaded"><img alt="hello_triangle.png" src="img/hello_triangle.png"></span></p>
+<h3 data-heading="BONUS: Using a proper Vertex Buffer" dir="auto">BONUS: Using a proper Vertex Buffer</h3>
+<p dir="auto">So far we've used a hardcoded vertex buffer in the shader.</p>
+<p dir="auto">An important caveat is that Metal 4 treats vertex buffers as any other buffer. There's no <code>encoder-&gt;setVertexBuffer()</code>.</p>
+<p dir="auto">We'll need 3 buffers, one for each frame in flight, although we could use just 1 for this example because they won't change.<br>
+But before we get there I  need to explain  2 concepts: <em>Argument Tables</em> and <em>Residency Sets</em>.</p>
+<h4 data-heading="Argument Tables" dir="auto">Argument Tables</h4>
+<p dir="auto">Argument Tables are new (at least as something exposed to the programmer) in Metal 4, and are essentially a list of the resource binding points that an encoder needs per stage (they can be reused and shared across encoders). For bindless, they'll probably have just 1 buffer.<br>
+For this, all we need is a single table with 1 buffer (the vertex buffer):</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// In the Renderer struct/class</span>
+MTL4<span class="token double-colon punctuation">::</span>ArgumentTable<span class="token operator">*</span> arg_table  <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+<span class="token comment">// In the initialisation:</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Personally, I'm not a fan of allocating a *descriptor*, but wcyd?</span>
+	<span class="token keyword">auto</span><span class="token operator">*</span> desc <span class="token operator">=</span> MTL4<span class="token double-colon punctuation">::</span><span class="token class-name">ArgumentTableDescriptor</span><span class="token double-colon punctuation">::</span><span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">defer</span><span class="token punctuation">(</span> desc<span class="token operator">-&gt;</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	desc<span class="token operator">-&gt;</span><span class="token function">setMaxBufferBindCount</span><span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">// For the sake of simplicity I'm completely ignoring error management</span>
+	arg_table <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newArgumentTable</span><span class="token punctuation">(</span> desc<span class="token punctuation">,</span> <span class="token comment">/* error */</span> <span class="token keyword">nullptr</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 data-heading="Residency Sets" dir="auto">Residency Sets</h4>
+<p dir="auto">To make sure a resource is available for the GPU before using it you can manually make it resident (<code>useResource</code> and <code>useHeap</code>), but that has an overhead that builds up quickly.<br>
+Residency sets on the other hand can make them all resident at the same time, with less cost.<br>
+You can populate/update them at any point, and then you can attach them to a command buffer or the whole queue.<br>
+The driver will then make all the resources resident at once when you call <code>commit</code> on the command buffer (unless you explicitly request ahead-of-time residency).<br>
+It's a pretty neat feature, you can learn more about it <a data-tooltip-position="top" aria-label="https://developer.apple.com/documentation/metal/simplifying-gpu-resource-management-with-residency-sets" rel="noopener nofollow" class="external-link" href="https://developer.apple.com/documentation/metal/simplifying-gpu-resource-management-with-residency-sets" target="_blank">here</a>.</p>
+<p dir="auto">For now, let's simply create a long-term (meaning resources in this set will stay resident for the whole lifetime of the application) set:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// In the Renderer struct/class</span>
+MTL<span class="token double-colon punctuation">::</span>ResidencySet<span class="token operator">*</span> residency_set <span class="token operator">=</span> <span class="token keyword">nullptr</span><span class="token punctuation">;</span>
+
+<span class="token comment">// In the initialisation:</span>
+<span class="token keyword">auto</span><span class="token operator">*</span> desc <span class="token operator">=</span> MTL<span class="token double-colon punctuation">::</span><span class="token class-name">ResidencySetDescriptor</span><span class="token double-colon punctuation">::</span><span class="token function">alloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+residency_set <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newResidencySet</span><span class="token punctuation">(</span> desc<span class="token punctuation">,</span> <span class="token keyword">nullptr</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+desc<span class="token operator">-&gt;</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">After adding resources to the set (which we'll do in a minute), we need to commit it, and add it to the command queue.<br>
+We should also add the Metal layer's residency set, which is managed by AppKit.</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// In the initialisation:</span>
+residency_set<span class="token operator">-&gt;</span><span class="token function">commit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+cmd_queue<span class="token operator">-&gt;</span><span class="token function">addResidencySet</span><span class="token punctuation">(</span> residency_set <span class="token punctuation">)</span><span class="token punctuation">;</span>
+cmd_queue<span class="token operator">-&gt;</span><span class="token function">addResidencySet</span><span class="token punctuation">(</span> metal_layer<span class="token operator">-&gt;</span><span class="token function">residencySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h4 data-heading="Creating the Vertex Buffer(s)" dir="auto">Creating the Vertex Buffer(s)</h4>
+<p dir="auto">Now that we have the argument table and residence set, we can create the vertex buffers.<br>
+As I mentioned before, Metal 4 doesn't have a <code>setVertexBuffer()</code>, they are treated as regular buffers.<br>
+We'll create them with the <code>Shared</code> storage mode so we can write to them directly from the CPU.<br>
+We also need to add them to the residency set so the driver can make sure everything is available before it starts drawing.</p>
+<blockquote dir="auto">
+<p>WARNING<br>
+Because for this example these buffers won't change, I'll just populate and add them to the residency set and argument table during initialisation. However, in a normal use case we would do it before the draw call, and/or manage the argument table and residency set differently.</p>
+</blockquote>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token keyword">static</span> <span class="token keyword">constexpr</span> u8 VERTEX_BUFFER_BINDING_IDX <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">Vertex</span>
+<span class="token punctuation">{</span>
+	vec4 position<span class="token punctuation">;</span>
+    vec4 color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span> <span class="token keyword">constexpr</span> Array<span class="token operator">&lt;</span> Vertex<span class="token punctuation">,</span> <span class="token number">3</span> <span class="token operator">&gt;</span> triangle_vertices
+<span class="token punctuation">{</span>
+    Vertex<span class="token punctuation">{</span> <span class="token punctuation">.</span>position <span class="token operator">=</span> <span class="token punctuation">{</span>  <span class="token number">0.0</span><span class="token punctuation">,</span>  <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span> <span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    Vertex<span class="token punctuation">{</span> <span class="token punctuation">.</span>position <span class="token operator">=</span> <span class="token punctuation">{</span>  <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    Vertex<span class="token punctuation">{</span> <span class="token punctuation">.</span>position <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">0.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">.</span>color <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">// In the Renderer struct/class</span>
+Array<span class="token operator">&lt;</span> MTL<span class="token double-colon punctuation">::</span><span class="token type-opencl-host-cpp keyword">Buffer</span><span class="token operator">*</span><span class="token punctuation">,</span> MAX_FRAMES_IN_FLIGHT <span class="token operator">&gt;</span> vertex_buffers<span class="token punctuation">;</span>
+
+<span class="token comment">// In the initialisation</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span> u8 i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> vertex_buffers<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	vertex_buffers<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> device<span class="token operator">-&gt;</span><span class="token function">newBuffer</span><span class="token punctuation">(</span>
+		<span class="token comment">/* length  */</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span> Vertex <span class="token punctuation">)</span> <span class="token operator">*</span> triangle_vertices<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+		<span class="token comment">/* options */</span> MTL<span class="token double-colon punctuation">::</span>ResourceStorageModeShared <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">const</span> String name <span class="token operator">=</span> <span class="token function">fmt</span><span class="token punctuation">(</span> <span class="token string">"Vertex Buffer for frame #{}"</span><span class="token punctuation">,</span> i <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	vertex_buffers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-&gt;</span><span class="token function">setLabel</span><span class="token punctuation">(</span> <span class="token function">ns_str</span><span class="token punctuation">(</span> name<span class="token punctuation">.</span><span class="token function">c_str</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Populate the vertex buffer</span>
+	<span class="token function">memcpy</span><span class="token punctuation">(</span>
+		vertex_buffers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-&gt;</span><span class="token function">contents</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+		triangle_vertices<span class="token punctuation">.</span><span class="token function">data</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+		<span class="token keyword">sizeof</span><span class="token punctuation">(</span> Vertex <span class="token punctuation">)</span> <span class="token operator">*</span> triangle_vertices<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	residency_set<span class="token operator">-&gt;</span><span class="token function">addAllocation</span><span class="token punctuation">(</span> vertex_buffers<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+	arg_table<span class="token operator">-&gt;</span><span class="token function">setAddress</span><span class="token punctuation">(</span> vertex_buffers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">-&gt;</span><span class="token function">gpuAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> VERTEX_BUFFER_BINDING_IDX <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p dir="auto">Then, each frame before encoding the draw call, we set the argument table:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// Renderer::render_frame()</span>
+MTL4<span class="token double-colon punctuation">::</span>RenderCommandEncoder<span class="token operator">*</span> encoder <span class="token operator">=</span> cmd_buf<span class="token operator">-&gt;</span><span class="token function">renderCommandEncoder</span><span class="token punctuation">(</span> pass_desc <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// ...</span>
+encoder<span class="token operator">-&gt;</span><span class="token function">setArgumentTable</span><span class="token punctuation">(</span> arg_table<span class="token punctuation">,</span> MTL<span class="token double-colon punctuation">::</span>RenderStageVertex <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// ...</span>
+encoder<span class="token operator">-&gt;</span><span class="token function">drawPrimitives</span><span class="token punctuation">(</span> MTL<span class="token double-colon punctuation">::</span>PrimitiveTypeTriangle<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p dir="auto">Finally, we make the appropriate changes to the vertex shader:</p>
+<pre class="language-cpp"><code class="language-cpp is-loaded"><span class="token comment">// These two could be defined in a header file included by both the Renderer and the shader</span>
+<span class="token keyword">static</span> constant uint VERTEX_BUFFER_BINDING_IDX <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">VertexIn</span>
+<span class="token punctuation">{</span>
+    float4 position<span class="token punctuation">;</span>
+    float4 color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">VertexOut</span>
+<span class="token punctuation">{</span>
+    float4 position <span class="token punctuation">[</span><span class="token punctuation">[</span> position <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    float4 color<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+vertex
+VertexOut <span class="token function">vertex_shader</span><span class="token punctuation">(</span>
+    uint id <span class="token punctuation">[</span><span class="token punctuation">[</span> vertex_id <span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    constant VertexIn<span class="token operator">*</span> vertices <span class="token punctuation">[</span><span class="token punctuation">[</span> <span class="token function">buffer</span><span class="token punctuation">(</span> VERTEX_BUFFER_BINDING_IDX <span class="token punctuation">)</span> <span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">{</span>
+	    vertices<span class="token punctuation">[</span> id <span class="token punctuation">]</span><span class="token punctuation">.</span>position<span class="token punctuation">,</span>
+	    vertices<span class="token punctuation">[</span> id <span class="token punctuation">]</span><span class="token punctuation">.</span>color <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+  </body>
+</html>
