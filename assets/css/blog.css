@@ -1,0 +1,36 @@
+@import "./main.css";
+
+i, em{
+    font-style: italic;
+}
+
+b, strong{
+    font-weight: bold;
+}
+
+ol, ul{
+    list-style: initial;
+    padding-left: 1em;
+}
+
+p {
+    margin: 1em 0;
+}
+
+blockquote {
+    quotes: initial;
+    content: initial;
+    margin: 0;
+    padding: 0 1em;
+    font-style: italic;
+    color: var(--fgColor-muted);
+    background-color: #f7f7f7;
+    border-left: .25em solid #aaa;
+}
+
+hr {
+    margin: 1em 25pc;
+    border: none;
+    border-top: dotted;
+    border-color: #aaa;
+}
