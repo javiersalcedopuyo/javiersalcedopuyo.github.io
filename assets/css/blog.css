@@ -10,7 +10,8 @@ b, strong{
 
 ol, ul{
     list-style: initial;
-    padding-left: 1em;
+    padding-left: 2em;
+    margin: 0;
 }
 
 p {
