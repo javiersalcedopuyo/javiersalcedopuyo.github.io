@@ -25,9 +25,15 @@ blockquote {
     margin: 0;
     padding: 0 1em;
     font-style: italic;
-    color: var(--fgColor-muted);
     background-color: #f7f7f7;
     border-left: .25em solid #aaa;
+}
+
+blockquote.warning{
+    color: black;
+    background-color: #fff4b3;
+    border-left: .25em solid gold;
+    font-style: normal;
 }
 
 hr {
