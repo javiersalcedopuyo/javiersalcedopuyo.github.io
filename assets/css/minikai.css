@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+code {
+    padding: 0.1em 0.25em;
+    font-size: 11pt;
+    font-family: "JetBrains Mono", monospace;
+    background-color: #ddd;
+    color: #000;
+}
+
+pre {
+    padding: 1em;
+    line-height: 1;
+    background-color: #333;
+    color: #fff;
+    display: block;
+    border-radius: 5px;
+    border-top: 1.5em solid lightGrey;
+    box-shadow: 5px 5px 5px grey;
+    position: relative;
+}
+
+pre code{
+    color: #fff;
+    background-color: #333;
+    white-space: pre-wrap;
+}
+
+
+code span.co    /* Comment */
+{
+    color: cyan;
+}
+
+code span.pp,   /* PreProcessor */
+code span.kw,   /* Keyword */
+code span.at,   /* Attribute */
+code span.cf,   /* Control Flow */
+code span.sc    /* SpecialChar */
+{
+    color: deepPink;
+}
+
+code span.st,   /* String */
+code span.ss,   /* SpecialString */
+code span.vs,   /* VerbatimString */
+code span.fl,   /* Float */
+code span.ch,   /* Char */
+code span.bu,   /* BuiltIn */
+code span.cn,   /* Constant */
+code span.dv,   /* DecVal */
+code span.im    /* Import */
+{
+    color: gold;
+}
+
+code span.fu, /* Function */
+code span.ot  /* other */
+{
+    color: greenYellow;
+}
+
+code span.op /* Operator */
+{
+    color: silver;
+}
+
+code span.dt, /* DataType */
+code span.ex
+{
+    /* color: mediumPurple; */
+    color: #AE81FF;
+}
+
+
+code span.al, /* Alert */
+code span.er  /* Error */
+{
+    color: red;
+    font-weight: bold;
+}
+
+/*code span.bn { color: #40a070; } /* BaseN */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
