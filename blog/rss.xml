@@ -32,5 +32,13 @@
             <category>Thoughts</category>
             <link>https://javiersalcedopuyo.xyz/blog/2024/sisyphus.html</link>
         </item>
+
+        <item>
+            <title>Pet projects shouldn't be optimal</title>
+            <description>Toughts about the risks of taking hobbies too seriously.</description>
+            <pubDate>Mon, 23 May 2022 08:00:00 GMT</pubDate>
+            <category>Thoughts</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2022/pet_projects_shouldnt_be_optimal.html</link>
+        </item>
     </channel>
 </rss>
