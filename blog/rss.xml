@@ -40,5 +40,14 @@
             <category>Thoughts</category>
             <link>https://javiersalcedopuyo.xyz/blog/2022/pet_projects_shouldnt_be_optimal.html</link>
         </item>
+
+        <item>
+            <title>In defence of daily stand-ups</title>
+            <description>Toughts about the usefulness of daily stand-ups.</description>
+            <pubDate>Mon, 01 May 2020 08:00:00 GMT</pubDate>
+            <category>Thoughts</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2020/in_defence_of_daily_standups.html</link>
+        </item>
+
     </channel>
 </rss>
