@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+
+    <channel>
+        <atom:link href="https://javiersalcedopuyo.xyz/blog/rss.xml" rel="self" type="application/rss+xml" />
+
+        <title>Javier Salcedo's Blog</title>
+        <description>Thoughts, notes, and tutorials about computer graphics, programming, and tech.</description>
+        <language>en-gb</language>
+        <link>https://javiersalcedopuyo.xyz/blog/</link>
+
+        <item>
+            <title>"Hello Triangle" with Metal-cpp and no ObjC</title>
+            <description>Tutorial explaining how to write a "Hello Triangle" application with Metal 4, exclusively in C++.</description>
+            <pubDate>Wed, 04 Feb 2026 08:00:00 GMT</pubDate>
+            <category>Tutorial</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2026/metal_4_cpp_hello_triangle.html</link>
+        </item>
+
+        <item>
+            <title>I love offline</title>
+            <description>Toughts about the usefulness and speed of offline tools.</description>
+            <pubDate>Mon, 01 Sep 2025 08:00:00 GMT</pubDate>
+            <category>Thoughts</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2025/I_love_offline.html</link>
+        </item>
+
+        <item>
+            <title>One must imagine Sisyphus writing a new JS framework</title>
+            <description>Toughts about fighting the doom loop in tech.</description>
+            <pubDate>Fri, 27 Sep 2024 08:00:00 GMT</pubDate>
+            <category>Thoughts</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2024/sisyphus.html</link>
+        </item>
+    </channel>
+</rss>
