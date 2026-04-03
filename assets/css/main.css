@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,200");
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 /*
 	Halcyonic by HTML5 UP
@@ -85,16 +85,16 @@ input, select, textarea {
 	body {
 		background: #D4D9DD url("images/bg03.jpg");
 		color: #474f51;
-		font-size: 13.5pt;
-		font-family: 'Yanone Kaffeesatz';
+		font-size: 12pt;
+		font-family: 'IBM Plex Serif';
 		line-height: 1.85em;
 		font-weight: 300;
 	}
 
 	input, textarea, select {
 		color: #474f51;
-		font-size: 13.5pt;
-		font-family: 'Yanone Kaffeesatz';
+		font-size: 12pt;
+		font-family: 'IBM Plex Serif';
 		line-height: 1.85em;
 		font-weight: 300;
 	}
