@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<!--
+	Halcyonic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+        <title>🌄 Rendering a Screen-space Skybox</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/blog.css" />
+        <link rel="apple-touch-icon"      sizes="57x57"     href="../../images/Icon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon"      sizes="60x60"     href="../../images/Icon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon"      sizes="72x72"     href="../../images/Icon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon"      sizes="76x76"     href="../../images/Icon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon"      sizes="114x114"   href="../../images/Icon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon"      sizes="120x120"   href="../../images/Icon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon"      sizes="144x144"   href="../../images/Icon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon"      sizes="152x152"   href="../../images/Icon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon"      sizes="180x180"   href="../../images/Icon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"   href="../../images/Icon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32"     href="../../images/Icon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96"     href="../../images/Icon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16"     href="../../images/Icon/favicon-16x16.png">
+	</head>
+
+    <body class="subpage">
+		<!-- Header -->
+	    <div id="page-wrapper">
+			<section id="header">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<!-- Logo -->
+							<h1><a href="../" id="logo">Javi's Blog</a></h1>
+							<nav id="nav">
+                                <a href="../">Home</a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://dev.to/javiersalcedopuyo">Dev.to</a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://javiersalcedo-p.medium.com/">Medium</a>
+                                <a href="rss.xml"><img src="../../images/Icon/rss.png" style="display:inline-block;height:1em;"></a>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</section>
+	    </div>
+	    <a class="go_up" href="#">⇪</a>
+		<!-- Content -->
+		<section id="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<section>
+						    <p><a href="../">< Back</a></p>
+                            <p>📅 27-Apr-2023</p>
+                            <blockquote dir="auto">
+                                <p><i>Article first published in <a data-tooltip-position="top"  rel="noopener nofollow" class="external-link" href="https://dev.to/javiersalcedopuyo/rendering-a-screen-space-skybox-57ca" target="_blank">Dev.to</a></i></p>
+                            </blockquote>
+
+<figure>
+<img class="bordered-feature-image" src="img/skybox.png" alt="final result" width="100%"/>
+</figure>
+
+<h2 id="rendering-a-screen-space-skybox">🌄 Rendering a Screen-space Skybox</h2>
+
+<blockquote class="warning" dir="auto">
+    <p><b>NOTE:</b><br>
+    This won’t be an article that goes very deep into details,
+    it’s more a way to document how I implemented the skybox in my renderer.
+    I use Metal, but it should translate to other APIs almost
+    1-to-1.</p>
+</blockquote>
+<hr />
+
+<p>When I decided to implement a skybox on <a
+href="https://github.com/javiersalcedopuyo/Talos3D">my renderer</a> my
+first impulse was to follow <a
+href="https://learnopengl.com/Advanced-OpenGL/Cubemaps">the ol’ reliable
+LearnOpenGL article on cubemaps</a>, which essentially consists on
+rendering a giant cube around the camera.</p>
+<figure>
+<img class="bordered-feature-image" src="img/cubemaps_sampling.png" alt="LearnOpenGL cubemap example" width="33%" />
+</figure>
+<p>It’s a simple and very intuitive approach but I wanted something a
+wee bit fancier. Also, this technique requires uploading a lot of data
+(all the cube’s vertices, a new view matrix so it “stays in place” as
+you move the camera, etc) which wouldn’t be necessary on a screen-space
+approach.</p>
+<h3 id="screen-space-implementation">📺 Screen-space implementation</h3>
+<p>For those unfamiliar with the term, screen-space basically means that
+we render onto a plane (normally a quad or a giant triangle) that covers
+the whole screen. If you want to be super efficient you can use a giant
+triangle but I opted for a quad because it was simpler to set up (I can
+hardcode the output vertex positions as the corners of the normalised
+device coordinates space at the near plane).</p>
+<figure>
+<img class="bordered-feature-image" src="img/fullscreen_quad.png" alt="Screen-Space geometry" width="33%"/>
+</figure>
+<p>The fragment shader will sample the cube texture with the view
+direction <strong>in world space</strong>. To get it, I simply multiply
+the <strong>vertex</strong> position by the inverse view and projection
+matrices and let the GPU interpolate it.</p>
+<p>Normally, in vertex shader we go from object to world, to camera, and
+finally to clip/device space, but in this case we already have the
+device coordinates and we need the world’s.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">// So instead of doing:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>device_space_pos <span class="op">=</span> projection <span class="op">*</span> view <span class="op">*</span> model <span class="op">*</span> objec_space_pos<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// We need the inverse transformation, which implies multiplying by the inverse</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">// matrices, in reverse order:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>world_space_pos <span class="op">=</span> <span class="fu">inverse</span><span class="op">(</span>view<span class="op">)</span> <span class="op">*</span> <span class="fu">inverse</span><span class="op">(</span>projection<span class="op">)</span> <span class="op">*</span> device_space_pos<span class="op">;</span></span></code></pre></div>
+<blockquote class="info">
+    <p>🚀 Performance tip:</p>
+    <p>Inverting a matrix is an expensive operation, but
+    we can take a shortcut:</p>
+    Orthonormal matrices (matrices that don’t change
+    the relative position between points) have the convenient property that
+    their inverse is the same as its transpose, which is way easier to
+    compute. Thankfully, the view matrix is orthonormal, so we can save some
+    work there. However, the same doesn’t apply to the projection matrix and
+    it has to be inverted “properly”.</p>
+</blockquote>
+<blockquote class="info">
+    <p>ℹ️ You could precompute these inverse
+    matrices on the CPU instead of re-calculating them for every vertex, but
+    since there’re only 4 vertices (potentially 3), the cost of uploading
+    and binding the extra matrices would probably be higher.</p>
+</blockquote>
+<p>If we render the skybox the first thing in the pass, that’d be it.
+The skybox will “clear” the render target and everything else would go
+on top (just remember to disable depth write). However I wanted to go
+further and optimise it a bit more.</p>
+<h3 id="avoiding-work">🥱 Avoiding work</h3>
+<p>I got the idea from this reply to one of my tweets:</p>
+<figure>
+<img class="bordered-feature-image" src="img/tweet_reply.png" alt="Embedded tweets don’t seem to work" width="50%"/>
+</figure>
+<p>It makes a lot of sense!</p>
+<p>My test scene only has 3 objects at the moment: the floor, a Stanford
+Bunny and a Utah Teapot, but a “real” environment will have a lot of
+things on the screen, and the skybox will take only a small percentage
+of the render target. Why would we want to calculate the skybox for
+every single fragment if most of them will get overwritten anyway? And
+keep in mind that we are doing 2 expensive operations here: inverting a
+matrix (vertex stage) and <strong>sampling a cubemap (fragment
+stage)</strong>. A stencil is the perfect fit.</p>
+<p>In this case we don’t need anything fancy, we just need to know if
+that fragment is “free”. So what I did was:</p>
+<ol type="1">
+<li>Move the skybox draw call to <strong>the end</strong> of the scene
+pass.</li>
+<li>For every scene object, increment the stencil when a fragment is
+drawn.</li>
+<li>When rendering the skybox, only draw the fragments that still have a
+stencil of 0.</li>
+</ol>
+<p>This is how my stencil looks at the end of the pass:</p>
+<img class="bordered-feature-image" src="img/stencil.png" alt="Stencil buffer" width="33%" />
+<p>The skybox fragment shader will only run for the pixels in black,
+saving a lot of computing.</p>
+<p>To achieve this in the code I had to: 1. Change the Z buffer format
+to include stencil 2. Create 2 separated stencil states. One for the
+scene rendering, and another for the skybox.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mainStencilDesc<span class="op">.</span>depthStencilPassOperation   <span class="op">=</span> <span class="op">.</span>incrementClamp</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mainStencilDesc<span class="op">.</span>stencilCompareFunction      <span class="op">=</span> <span class="op">.</span>always</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">// Only render the skybox for the fragments that have the same stencil value as the reference</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>skyboxStencilDesc<span class="op">.</span>stencilCompareFunction    <span class="op">=</span> <span class="op">.</span>equal</span></code></pre></div>
+<p>2.1 BONUS: Disable depth writing and testing for the skybox. It’s not
+100% necessary because the quad will be so close to the camera that
+it’ll always pass, but it has a cost that we can easily avoid.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>skyboxDSDesc<span class="op">.</span>frontFaceStencil       <span class="op">=</span> skyboxStencilDesc</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>skyboxDSDesc<span class="op">.</span>isDepthWriteEnabled    <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>skyboxDSDesc<span class="op">.</span>depthCompareFunction   <span class="op">=</span> <span class="op">.</span>always</span></code></pre></div>
+<ol start="3" type="1">
+<li>Swap the states and set the reference value</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode swift"><code class="sourceCode swift"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">// All other scene draw call encoding</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>cmdEncoder<span class="op">.</span><span class="fu">setDepthStencilState</span><span class="op">(</span>skyboxDepthStencilState<span class="op">)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>cmdEncoder<span class="op">.</span><span class="fu">setStencilReferenceValue</span><span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">// Encode the skybox draw call</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
+<p>Et voilà!</p>
+<figure>
+<img class="bordered-feature-image" src="img/skybox.gif" alt="Demo" width="75%"/>
+</figure>
+<hr />
+<h3 id="conclusions">🧑‍🏫 Conclusions</h3>
+<h4 id="the-good">😄 The good</h4>
+<ul>
+<li>Pretty simple to implement.</li>
+<li>Ridiculously small bandwidth cost: This approach only requires us to
+upload the cubemap and 4 vertices (3 if we used a triangle) that don’t
+really need to carry any information. We could even just upload a point
+and generate the quad in the geometry stage. The cubemap can (and will)
+be used for other techniques so it’s not really an extra cost and it can
+stay bound, it uses the same view and projection matrices so we don’t
+need to bind any, and it uses the same attachments as the rest of the
+scene so it can stay in the same pass.</li>
+<li>The most expensive part (cubemap sampling) is only done where it’s
+stricly necessary.</li>
+</ul>
+<h4 id="the-bad">😭 The bad</h4>
+<ul>
+<li>Not as “intuitive” as the giant cube approach?</li>
+</ul>
+<h4 id="the-ugly">👹 The ugly</h4>
+<ul>
+<li>I spent more time than what I’m proud to admit debugging a “lense
+distortion” and doubting my math and graphics knowledge. Turns out it
+was caused by me “inverting” the projection matrix by transposing it,
+despite it not being orthonormal.</li>
+<li>Managing the depth-stencil state can be annoying in some graphic
+APIs?</li>
+</ul>
+<hr>
+						    <p><a href="../">< Back</a></p>
+                        </section>
+					</div>
+				</div>
+		</section>
+
+	    <!-- Copyright -->
+	    <div id="copyright">
+		    &copy; Javier Salcedo. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+	    </div>
+  </body>
+</html>

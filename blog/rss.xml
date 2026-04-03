@@ -34,6 +34,14 @@
         </item>
 
         <item>
+            <title>Rendering a Screen-space Skybox</title>
+            <description>Tutorial describing how to implement a Skybox in a screen-space pass.</description>
+            <pubDate>Thu, 27 Apr 2023 08:00:00 GMT</pubDate>
+            <category>Tutorial</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2023/skybox.html</link>
+        </item>
+
+        <item>
             <title>Pet projects shouldn't be optimal</title>
             <description>Toughts about the risks of taking hobbies too seriously.</description>
             <pubDate>Mon, 23 May 2022 08:00:00 GMT</pubDate>
