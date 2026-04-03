@@ -36,6 +36,21 @@ blockquote.warning{
     font-style: normal;
 }
 
+blockquote.warning b {
+    color: orange
+}
+
+blockquote.info{
+    color: black;
+    background-color: lightCyan;
+    border-left: .25em solid darkCyan;
+    font-style: normal;
+}
+
+blockquote.info b{
+    color: darkCyan;
+}
+
 hr {
     margin: 1em 25pc;
     border: none;
