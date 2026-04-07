@@ -1634,8 +1634,13 @@ input, select, textarea {
 		#content h4 {
 			color: black;
 			font-size: 1.25em;
-			font-style: bold;
 			text-decoration: underline dotted;
+		}
+
+		#content h5 {
+			color: #ED391B;
+			font-size: 1.125em;
+			font-style: italic;
 		}
 
 		#content .button-large {

@@ -42,6 +42,14 @@
         </item>
 
         <item>
+            <title>RenderingShadows in Real-Time Applications (Part 1)</title>
+            <description>1st part of my notes about rendering shadows in video games and other real time applications, with a focus on 2D shadow maps.</description>
+            <pubDate>Thu, 02 Feb 2023 08:00:00 GMT</pubDate>
+            <category>Notes</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2023/shadows_p1.html</link>
+        </item>
+
+        <item>
             <title>Pet projects shouldn't be optimal</title>
             <description>Toughts about the risks of taking hobbies too seriously.</description>
             <pubDate>Mon, 23 May 2022 08:00:00 GMT</pubDate>

@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<!--
+	Halcyonic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+        <title>Rendering Shadows in Real-Time Applications (Part 1)</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/blog.css" />
+        <link rel="apple-touch-icon"      sizes="57x57"     href="../../images/Icon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon"      sizes="60x60"     href="../../images/Icon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon"      sizes="72x72"     href="../../images/Icon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon"      sizes="76x76"     href="../../images/Icon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon"      sizes="114x114"   href="../../images/Icon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon"      sizes="120x120"   href="../../images/Icon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon"      sizes="144x144"   href="../../images/Icon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon"      sizes="152x152"   href="../../images/Icon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon"      sizes="180x180"   href="../../images/Icon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"   href="../../images/Icon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32"     href="../../images/Icon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96"     href="../../images/Icon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16"     href="../../images/Icon/favicon-16x16.png">
+	</head>
+
+    <body class="subpage">
+		<!-- Header -->
+	    <div id="page-wrapper">
+			<section id="header">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<!-- Logo -->
+							<h1><a href="../" id="logo">Javi's Blog</a></h1>
+							<nav id="nav">
+                                <a href="../">Home</a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://dev.to/javiersalcedopuyo">Dev.to</a>
+                                <a target="_blank" rel="noopener noreferrer" href="https://javiersalcedo-p.medium.com/">Medium</a>
+                                <a href="rss.xml"><img src="../../images/Icon/rss.png" style="display:inline-block;height:1em;"></a>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</section>
+	    </div>
+	    <a class="go_up" href="#">⇪</a>
+		<!-- Content -->
+		<section id="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<section>
+						    <p><a href="../">< Back</a></p>
+                            <p>📅 02-Feb-2023</p>
+                            <blockquote dir="auto">
+                                <p><i>Article first published in 2 parts in <a data-tooltip-position="top"  rel="noopener nofollow" class="external-link" href="https://dev.to/javiersalcedopuyo/rendering-shadows-in-real-time-applications-1-static-shadows-58e4" target="_blank">Dev.to</a></i></p>
+                            </blockquote>
+
+<h2 id="rendering-shadows-in-real-time-applications-part-1">Rendering Shadows in Real-Time Applications (Part 1)</h2>
+<p>Rendering shadows on Real Time Applications presents distinct
+challenges compared to their offline counterparts. On Offline
+ray/path-traced applications, shadows come “for free” as part of the
+rendering algorithm but for real time we normally need to rely on
+physically inaccurate, multi-pass techniques.</p>
+<p>On this series of articles, I’ll explain different ways we can
+achieve this.</p>
+<p>You can find the <a href="#references">references</a> at the end of the article.</p>
+<p>I would classify the most common techniques in the following way,
+depending on use case and type of light:</p>
+<ul>
+<li>Static
+<ul>
+<li>Baked Light Maps</li>
+</ul></li>
+<li>Dynamic
+<ul>
+<li>Shadow Maps
+<ul>
+<li>Directional and spot lights
+<ul>
+<li>Single</li>
+<li>Cascaded</li>
+</ul></li>
+<li>Point Lights</li>
+<li>Cube</li>
+</ul></li>
+<li>Stencil Shadows</li>
+</ul></li>
+</ul>
+<p>In any case, all these techniques involve generating one or multiple
+textures with the shadow information that will be sampled in the
+lighting pass to determine if a fragment is in shadow or not.</p>
+<p>Let’s start with static shadows.</p>
+<h3 id="baked-light-maps">Baked Light Maps</h3>
+<p>If we know for sure that the light sources and the shadow-casting
+objects are not going to change, we can use the power and simplicity of
+our offline cousins and create a baked light map. This would have the
+extra benefit of providing high quality lighting information as well,
+although we could bake just the shadows if we want to.</p>
+<p>To bake a light map we ray/path trace the scene from each light,
+adding the contribution of each ray to one or many textures that map
+every static object of the scene, and will be stored on disk after we’re
+finished. Later, when we render the scene, for each static object, we
+simply sample the texture(s).</p>
+<img class="bordered-feature-image" src="img/baked_light_example.png" alt="baked light example from Unity’s online docs" width="50%"/>
+<p>This of course would require us to organise the scene into a
+hierarchy that allows not only the ray/path tracing algorithm to work,
+but also to map each static surface to a unique region of the texture,
+and in a way that the texture coordinates can be retrieved during
+rendering. This technique will provide the highest quality and most
+physically correct shadows as we’re simulating the light rays bounces
+around the scene, but won’t be applied to moving or changing objects,
+which can create visually incoherent issues if not handled properly.</p>
+<img class="bordered-feature-image" src="img/broken_lightbulb.png" alt="broken lightbulb still illuminating the scene in Battlefield 4" width="50%"/>
+<p>This technique is also the cheapest at runtime, since it only
+requires sampling a single texture.</p>
+<p>It could also be combined with other real time techniques to be able
+to use dynamic light sources such as flashlights or vehicle headlights,
+or to add shadows for moving objects.</p>
+<p><strong>I’d choose this technique if</strong>: - The environment and
+main shadow-casting light sources are static. - You want the highest
+quality and most realistic shadows possible. - You want to reduce the
+number of real-time shadow-casting light sources while keeping the
+shadows they cast on the environment. - And/Or you want a high number of
+shadow-casting lights</p>
+<p>An example of an <em>ideal</em> game for this technique would be a
+photo-realistic first person walking simulator in a space ship.</p>
+<p><strong>I’d avoid it if</strong>: - You have a changing environment:
+- Trees moving with the wind - Destructible structures - User-built
+structures - The shadow-casting light sources change color, position or
+intensity over time: - Day-night cycle - Flickering or switchable
+lights</p>
+<h3 id="dynamic-shadows">Dynamic Shadows</h3>
+<p>All dynamic shadow maps are essentially the same technique, simply
+changing the number of maps, the positioning of the lights’ views and
+the blending between maps (if there’re more than 1), but they have
+different use cases and greatly vary in complexity.</p>
+<p>They also share the same limiting fact: each shadow-casting light
+source will need to render and apply its own shadow map. This greatly
+limits the number of shadow-casting lights present in a scene, since
+each one implies rendering the scene [1,N] times from different
+viewpoints. This makes them a good fit for other techniques such as
+bindless rendering.</p>
+<h4 id="d-shadow-maps">2D Shadow Maps</h4>
+<p>The main problem on rasterised real-time applications regarding
+shadows is that, at a given fragment, we don’t know anything else about
+the rest of the object or the scene so initially it’s not possible to
+know if the fragment is illuminated or not.</p>
+<p>A smart way to bypass this limitation of information is to check
+against what the light “sees”: If a fragment is visible from the camera,
+but not from the light, it means something else is in between the light
+and the fragment, so (for that particular light) it’s shaded. But, how
+do we know that?</p>
+<p>We can easily transform the fragment’s position to the light’s
+coordinate space if we create a view matrix for the light. The z/depth
+of that transformed fragment would be the depth from the light if
+nothing was in between the two. If we now sample the light’s depth
+buffer at that fragment’s coordinates and it’s smaller we know something
+else got rendered on top of it, so it’s shaded.</p>
+<p>Of course, this means we need to render the scene from the light’s
+perspective first, so we can get the depth buffer. This is the reason
+why this technique can get very expensive very quickly if we have too
+many shadow-casting lights.</p>
+<figure>
+<img class="bordered-feature-image" src="img/shadow_map_diagram.png" alt="Diagram of the shadow maps for directional and spot lights" width="50%"/>
+</figure>
+<p>This is a perfect technique for spot lights like flashlights,
+headlights or floodlights but it also works for directional lights, as
+long as the covered area is small.</p>
+<p>The general steps to follow are: 1. Create a new texture and bind it
+as the depth attachment of a new render pass</p>
+<ol start="2" type="1">
+<li><p>Bind the light matrix as the view and a perspective or orthogonal
+matrix as the projection (it’ll be perspective or orthogonal depending
+on the type of light).</p></li>
+<li><p>Render the scene. We can skip non-shadow-casting objects and the
+fragment stage, since we only want the depth buffer. (Keep in mind some
+objects like cloud billboards might need to have back-face culling
+disabled or flipped)</p></li>
+<li><p>Bind light’s view and projection matrices (you can pre-multiply
+them) as/inside a buffer for the vertex stage.</p></li>
+<li><p>Bind the now filled depth buffer as a regular texture for the
+fragment stage.</p></li>
+<li><p>Render the scene normally with the following additions to the
+shaders:</p></li>
+</ol>
+<p>In the <strong>vertex shader</strong>, the output now must include
+the transformed position of the vertex.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>vertexOut<span class="op">.</span>PositionInLightSpace <span class="op">=</span> lightViewProj <span class="op">*</span> object<span class="op">.</span>model <span class="op">*</span> vertex<span class="op">.</span>position</span></code></pre></div>
+<p>The <strong>fragment shader</strong> on the other hand will use the
+interpolated position in light clip space to sample the shadow map.
+First, the position needs to be normalised. That requires:</p>
+<ul>
+<li>Transforming it into device space by dividing it by the w component
+(perspective divide)</li>
+<li>Transform it into the [0,1] range (this will depend on the
+projection matrix and device coordinate space chosen)</li>
+</ul>
+<p>Finally, the x and y components can be used to sample the shadow map,
+and the z component can be used to compare agains that result. If the
+fragment depth (z component) is greater than the shadow map’s it means
+the fragment was not visible from the light, and thus it’s in the
+shade.</p>
+<div class="sourceCode" id="cb2"><pre
+                        class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">float</span> <span class="fu">ComputeShadow</span><span class="op">(</span><span class="dt">float4</span> position<span class="op">,</span> <span class="dt">texture2d</span><span class="op">&lt;</span><span class="dt">float</span><span class="op">&gt;</span> shadowMap<span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">constexpr</span> sampler smp<span class="op">(</span>min_filter<span class="op">::</span>linear<span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                          mag_filter<span class="op">::</span>linear<span class="op">,</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                          <span class="va">s_address</span><span class="op">::</span>clamp_to_border<span class="op">,</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                          t_address<span class="op">::</span>clamp_to_border<span class="op">);</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Transform from clip to device coordinate system.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Orthographic projection matrices don&#39;t need this.</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> lightCoords <span class="op">=</span> position <span class="op">/</span> position<span class="op">.</span>w<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Normalise the coordinates.</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// Depends on the projection matrix and device coordinate</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">// system.</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    lightCoords<span class="op">.</span>xy <span class="op">=</span> <span class="op">(</span>lightCoords<span class="op">.</span>xy <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0.5</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> closestDepth <span class="op">=</span> shadowMap<span class="op">.</span><span class="fu">sample</span><span class="op">(</span>smp<span class="op">,</span> lightCoords<span class="op">.</span>xy<span class="op">).</span>x<span class="op">;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">auto</span> currentDepth <span class="op">=</span> lightCoords<span class="op">.</span>z<span class="op">;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> currentDepth <span class="op">&gt;</span> closestDepth <span class="op">?</span> <span class="dv">1</span> <span class="op">:</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<br>
+<h5 id="problems">Problems</h5>
+<p>As it is, this presents an issue known as <strong>shadow acne</strong>:</p>
+<img class="bordered-feature-image" src="img/shadow_acne.png" alt="Example of shadow acne" width="50%"/>
+<p>Shadow acne happens when a single texel of the shadow map covers
+multiple fragments at the same time. This means they all will compare
+against a single depth value. That means the surface’s orientation
+relative to the light can cause some fragments to have different depths
+for the same shadow map texel, causing the distinct shadow patterns.</p>
+<img class="bordered-feature-image" src="img/shadow_acne_diagram.png" alt="Diagram showing why shadow acne occurs" width="50%"/>
+<p>We can solve this pushing the shadow map’s depth away from the light
+by adding a <em>bias</em> to <code>closestDepth</code> but, if pushed
+too far, the shadow can appear “detached” from the object. We call that
+<strong>peter-panning</strong>:</p>
+<img class="bordered-feature-image" src="img/peter_panning.png" alt="Example of Peter-Panning" width="50%"/>
+<p>A hardcoded bias however is never going to work for all cases, since
+it depends on the relative orientation of a fragment with the light. For
+that reason, multiple techniques to adapt the depth bias to the geometry
+exist, from simply adjust it according to the angle between the light
+and normal vectors, to more complex techniques like Receiver Plane Depth
+Bias (<em>Isidoro J.R, 2006[4]</em>) that uses derivatives to calculate
+how much the depth changes in the neighbouring fragments, or Adaptative
+Depth Bias (<em>Ehm et al., 2014[5]</em>).</p>
+<p>Thankfully nowadays APIs provide ways to adapt the depth bias
+automatically, depending on the gradient of the primitives. For example,
+in Metal these values perform quite well:</p>
+<div class="sourceCode" id="cb3"><pre
+                        class="sourceCode swift"><code class="sourceCode swift"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>commandEncoder<span class="op">.</span><span class="fu">setDepthBias</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> slopeScale<span class="op">:</span> <span class="dv">3</span><span class="op">,</span> clamp<span class="op">:</span> <span class="dv">1</span><span class="op">/</span><span class="dv">128</span><span class="op">)</span></span></code></pre></div>
+<p>This is applied while rendering the shadow map, so no bias has to be
+added to the fragment shader.</p>
+<figure>
+<img class="bordered-feature-image" src="img/shadow_example.png" alt="Final example of 2D shadow maps" width="50%"/>
+</figure>
+<h5 id="conclusion">Conclusion</h5>
+<p>This technique as presented here produces hard shadows. Soft shadows
+techniques require sampling multiple times the shadow map, which of
+course will add a certain performance cost depending on the complexity
+of the filtering done. This will be covered in future articles.</p>
+<p>The main disadvantage of this technique however is that the greater
+the area lit by the light source, the bigger the shadow map should be.
+Otherwise, we’ll miss small or far away objects, and the rest of the
+shadows will lose sharpness. It’s easy to see how this can become a big
+issue in terms of memory and bandwidth. This is particularly bad for
+directional lights like the Sun when the scene is big. In that case,
+it’s better to use Cascaded Shadow Maps.</p>
+<p>I’d choose this technique for the player’s in a first person game,
+headlights of vehicles, or other spot light sources like floodlights or
+searchlights. For directional lights I’d avoid this as a rule of thumb,
+but it could be used as the sun if the scene is relatively small (or the
+player’s view distance is limited), or maybe as an approximation for a
+big area light.</p>
+<hr />
+<h3 id="references">📚 References</h3>
+<ol type="1">
+    <li><a href="https://docs.unity3d.com/2018.2/Documentation/Manual/Lightmapping.html">“Lightmapping: Getting Started” (Unity docs)</a></li>
+    <li><a href="https://www.youtube.com/watch?v=eGmXDOGjKPA">Battlefield 4 example: “What is Baked Lighting? (Lightmap)”</a></li>
+    <li>Lengyel, E. (2019), Foundations of Game Engine Development: Rendering, Terathon Software LLC</li>
+    <li>Isidoro J. R. (2006), Shadow Mapping GPU-based Tips and Techniques, GDC 2006</li>
+    <li>Ehm, A., Ederer, A., Klein, A., &amp; Nischwitz, A. (2015). Adaptive depth bias for soft shadows</li>
+</ol>
+<hr />
+
+						    <p><a href="../">< Back</a></p>
+                        </section>
+					</div>
+				</div>
+		</section>
+	    <!-- Copyright -->
+	    <div id="copyright">
+		    &copy; Javier Salcedo. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+	    </div>
+  </body>
+</html>
