@@ -2053,7 +2053,8 @@ input, select, textarea {
     padding: 0.333em;
     border-radius: 100%;
     background-color: white;
-    box-shadow: 5px 5px 5px lightGrey;
+    box-shadow: 5px 5px 5px grey;
+    background: url("images/bg05.jpg");
 }
 
 .go_up:hover
