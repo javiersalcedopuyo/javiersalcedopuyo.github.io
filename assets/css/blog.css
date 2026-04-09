@@ -133,3 +133,18 @@ hr {
     padding: 0;
     margin: 0 0.5em 0 0.5em;
 }
+
+iframe
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+
+figcaption
+{
+    text-align: center;
+    font-weight: 300;
+    font-style: italic;
+}

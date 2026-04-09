@@ -5,7 +5,7 @@
         <atom:link href="https://javiersalcedopuyo.xyz/blog/rss.xml" rel="self" type="application/rss+xml" />
 
         <title>Javier Salcedo's Blog</title>
-        <description>Thoughts, notes, and tutorials about computer graphics, programming, and tech.</description>
+        <description>Thoughts and notes about graphics, programming, and Life in general.</description>
         <language>en-gb</language>
         <link>https://javiersalcedopuyo.xyz/blog/</link>
 
@@ -63,6 +63,14 @@
             <pubDate>Sat, 21 Aug 2021 08:00:00 GMT</pubDate>
             <category>Thoughts</category>
             <link>https://javiersalcedopuyo.xyz/blog/2021/my_best_daily_tool.html</link>
+        </item>
+
+        <item>
+            <title>My reason to embrace minimalism</title>
+            <description>Thoughts about what Minimalism means for me.</description>
+            <pubDate>Sat, 20 Feb 2021 08:00:00 GMT</pubDate>
+            <category>Thoughts</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2021/minimalism.html</link>
         </item>
 
         <item>
