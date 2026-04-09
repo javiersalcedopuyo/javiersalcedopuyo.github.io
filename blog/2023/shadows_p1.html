@@ -102,7 +102,7 @@ adding the contribution of each ray to one or many textures that map
 every static object of the scene, and will be stored on disk after we’re
 finished. Later, when we render the scene, for each static object, we
 simply sample the texture(s).</p>
-<img class="bordered-feature-image" src="img/baked_light_example.png" alt="baked light example from Unity’s online docs" width="50%"/>
+<img src="img/baked_light_example.png" alt="baked light example from Unity’s online docs" />
 <p>This of course would require us to organise the scene into a
 hierarchy that allows not only the ray/path tracing algorithm to work,
 but also to map each static surface to a unique region of the texture,
@@ -111,7 +111,7 @@ rendering. This technique will provide the highest quality and most
 physically correct shadows as we’re simulating the light rays bounces
 around the scene, but won’t be applied to moving or changing objects,
 which can create visually incoherent issues if not handled properly.</p>
-<img class="bordered-feature-image" src="img/broken_lightbulb.png" alt="broken lightbulb still illuminating the scene in Battlefield 4" width="50%"/>
+<img src="img/broken_lightbulb.png" alt="broken lightbulb still illuminating the scene in Battlefield 4" />
 <p>This technique is also the cheapest at runtime, since it only
 requires sampling a single texture.</p>
 <p>It could also be combined with other real time techniques to be able
@@ -162,7 +162,7 @@ perspective first, so we can get the depth buffer. This is the reason
 why this technique can get very expensive very quickly if we have too
 many shadow-casting lights.</p>
 <figure>
-<img class="bordered-feature-image" src="img/shadow_map_diagram.png" alt="Diagram of the shadow maps for directional and spot lights" width="50%"/>
+<img src="img/shadow_map_diagram.png" alt="Diagram of the shadow maps for directional and spot lights" />
 </figure>
 <p>This is a perfect technique for spot lights like flashlights,
 headlights or floodlights but it also works for directional lights, as
@@ -227,18 +227,18 @@ shade.</p>
 <br>
 <h5 id="problems">Problems</h5>
 <p>As it is, this presents an issue known as <strong>shadow acne</strong>:</p>
-<img class="bordered-feature-image" src="img/shadow_acne.png" alt="Example of shadow acne" width="50%"/>
+<img src="img/shadow_acne.png" alt="Example of shadow acne" />
 <p>Shadow acne happens when a single texel of the shadow map covers
 multiple fragments at the same time. This means they all will compare
 against a single depth value. That means the surface’s orientation
 relative to the light can cause some fragments to have different depths
 for the same shadow map texel, causing the distinct shadow patterns.</p>
-<img class="bordered-feature-image" src="img/shadow_acne_diagram.png" alt="Diagram showing why shadow acne occurs" width="50%"/>
+<img src="img/shadow_acne_diagram.png" alt="Diagram showing why shadow acne occurs" />
 <p>We can solve this pushing the shadow map’s depth away from the light
 by adding a <em>bias</em> to <code>closestDepth</code> but, if pushed
 too far, the shadow can appear “detached” from the object. We call that
 <strong>peter-panning</strong>:</p>
-<img class="bordered-feature-image" src="img/peter_panning.png" alt="Example of Peter-Panning" width="50%"/>
+<img src="img/peter_panning.png" alt="Example of Peter-Panning" />
 <p>A hardcoded bias however is never going to work for all cases, since
 it depends on the relative orientation of a fragment with the light. For
 that reason, multiple techniques to adapt the depth bias to the geometry
@@ -255,7 +255,7 @@ in Metal these values perform quite well:</p>
 <p>This is applied while rendering the shadow map, so no bias has to be
 added to the fragment shader.</p>
 <figure>
-<img class="bordered-feature-image" src="img/shadow_example.png" alt="Final example of 2D shadow maps" width="50%"/>
+<img src="img/shadow_example.png" alt="Final example of 2D shadow maps" />
 </figure>
 <h5 id="conclusion">Conclusion</h5>
 <p>This technique as presented here produces hard shadows. Soft shadows

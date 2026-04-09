@@ -86,3 +86,39 @@ hr {
     margin: 0 0 25px 0;
     border-radius: 5px;
 }
+
+/* Frame the images in the blog post by default */
+#content img
+{
+	display: block;
+	background: #fff url("images/bg04.png");
+	padding: 10px;
+	box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+	margin: 0 0 1.5em 0;
+	outline: 0;
+	width: 50%;
+	height: auto;
+}
+
+#content img.small_img
+{
+    width: 25%;
+}
+
+#content img.big_img
+{
+    width: 75%;
+}
+
+#content img.full_width_img
+{
+    width: 100%;
+}
+
+#content img.plain_img
+{
+	background: none;
+	box-shadow: none;
+	margin:  0;
+	padding: 0;
+}

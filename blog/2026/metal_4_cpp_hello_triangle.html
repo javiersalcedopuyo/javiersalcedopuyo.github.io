@@ -226,7 +226,7 @@
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
                             <p>If you run the program now you should get an empty window:</p>
-                            <img alt="Blank window" src="img/blank_window.png" width="50%" >
+                            <img class="plain_img" alt="Blank window" src="img/blank_window.png">
                             <h3 id="initialising-metal">Initialising Metal</h3>
                             <h4>Creating the Metal device and layer </h4>
                             <p>We need the device to issue commands, and the layer to
@@ -366,7 +366,7 @@
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>cmd_buf<span class="op">-&gt;</span>endCommandBuffer<span class="op">();</span></span></code></pre></div>
                             <p>Now, if you compile and run it, you should get a fully opaque black
                             window (notice that it's actually different from the <i>blank</i> window):</p>
-                            <img alt="Black window" src="img/black_window.png" width="50%" >
+                            <img class="plain_img" alt="Black window" src="img/black_window.png" >
                             <h3 id="encoding-commands">Encoding commands</h3>
                             <h4 id="render-pass-and-encoder">Render pass and encoder</h4>
                             <p>A Render Pass is essentially a group of commands that share the same
@@ -411,7 +411,7 @@
                             it to the queue, and present it; like we already did in the “Frame
                             Synchronisation” section.</p>
                             <p>If you run it now you should get a magenta window:</p>
-                            <img alt="Magenta window" src="img/magenta_window.png" width="50%" >
+                            <img class="plain_img" alt="Magenta window" src="img/magenta_window.png">
                             <h3 id="the-pipeline-and-shaders">The Pipeline and Shaders</h3>
                             <h4 id="the-metal-4-compiler">The Metal 4 Compiler</h4>
                             <p>Metal 4 introduces a new class that can compile both shaders and
@@ -542,7 +542,7 @@
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>encoder<span class="op">-&gt;</span>drawPrimitives<span class="op">(</span> <span class="dt">MTL<span class="op">::</span>PrimitiveTypeTriangle</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">3</span> <span class="op">);</span></span></code></pre></div>
                             <p>I also changed the clear color to a calmer grey.</p>
                             <p>If you now run it you should get something like this:</p>
-                            <img alt="Hell, Triangle!" src="img/hello_triangle.png" width="50%" >
+                            <img class="plain_img" alt="Hell, Triangle!" src="img/hello_triangle.png">
                             <h3 id="bonus">BONUS: Using a proper Vertex Buffer </h3>
                             <p>So far we’ve used a hardcoded vertex buffer in the shader.</p>
                             <p>An important caveat is that Metal 4 treats vertex buffers as any

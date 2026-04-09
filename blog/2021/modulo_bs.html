@@ -57,19 +57,19 @@
                             </blockquote>
 
 <figure>
-<img class="bordered-feature-image" src="img/time_to_stop.jpg" alt="time to stop" width="100%"/>
+<img class="full_width_img" src="img/time_to_stop.jpg" alt="time to stop" />
 </figure>
 <h2>Speed up your even-ness checks with this weird trick! 🙀</h2>
 <p>Oldest trick in the book, check if an integer is even or not. How do
 you do it? A nice and simple <code>num % 2 == 0</code> ?</p>
 <figure>
-<img class="bordered-feature-image" src="img/wrong.gif" alt="wrong" />
+<img src="img/wrong.gif" alt="wrong" />
 </figure>
 <p>That’s how most of us did it for a long time. Don’t even think about
 it, almost a reflex thing, am I right?</p>
 <p>And that’s fine and all, it gets the job done. But here we like
-things lean and mean, and we like them <em>fast</em>. <img class="bordered-feature-image"
-src="img/flash.gif" alt="flash" /></p>
+things lean and mean, and we like them <em>fast</em>.</p>
+<img  src="img/flash.gif" alt="flash" />
 <p>First of all, why is modulo slow? Well, the modulo operation does
 more than just checking if a number is even or not, it returns the
 <strong>reminder</strong> of the division of both elements (and <a
@@ -78,18 +78,18 @@ hate dividing</a>). This works for us because an even number will always
 have a reminder of 0 when divided by 2, but we are wasting precious
 sweet sweet CPU cycles.</p>
 <figure>
-<img class="bordered-feature-image" src="img/greed.gif" alt="greed" />
+<img src="img/greed.gif" alt="greed" />
 </figure>
 <p>But what other nice and useful property have even numbers? Their last
 bit is always 1. And how can we check the value of a single bit? With a
 beautiful and simple single-instruction <strong>binary AND</strong></p>
-<p>Here an assembly comparison: <img class="bordered-feature-image" src="img/modulo_asm_1.jpg"
-alt="ASM1" /></p>
-<p>And now the real plot-twist! All of this doesn’t really matter. <img class="bordered-feature-image"
-src="img/twist.gif" alt="plottwist" /></p>
+<p>Here an assembly comparison:</p>
+<img class="big_img" src="img/modulo_asm_1.jpg" alt="ASM1" />
+<p>And now the real plot-twist! All of this doesn’t really matter.</p>
+<img src="img/twist.gif" alt="plottwist" />
 <p>The compiler is smart enough to know when are you just checking if
-the number is even, and does the change for you! <img class="bordered-feature-image"
-src="img/modulo_asm_2.jpg" alt="ASM2" /></p>
+the number is even, and does the change for you!</p>
+<img class="big_img" src="img/modulo_asm_2.jpg" alt="ASM2" />
 <p>But hey, at least you now know a little bit (hehe see what I did
 there) better how things work under the hood!</p>
 

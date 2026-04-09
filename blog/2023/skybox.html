@@ -57,7 +57,7 @@
                             </blockquote>
 
 <figure>
-<img class="bordered-feature-image" src="img/skybox.png" alt="final result" width="100%"/>
+<img src="img/skybox.png" alt="final result" class="full_width_img"/>
 </figure>
 
 <h2 id="rendering-a-screen-space-skybox">🌄 Rendering a Screen-space Skybox</h2>
@@ -78,7 +78,7 @@ href="https://learnopengl.com/Advanced-OpenGL/Cubemaps">the ol’ reliable
 LearnOpenGL article on cubemaps</a>, which essentially consists on
 rendering a giant cube around the camera.</p>
 <figure>
-<img class="bordered-feature-image" src="img/cubemaps_sampling.png" alt="LearnOpenGL cubemap example" width="33%" />
+<img src="img/cubemaps_sampling.png" alt="LearnOpenGL cubemap example" class="small_img" />
 </figure>
 <p>It’s a simple and very intuitive approach but I wanted something a
 wee bit fancier. Also, this technique requires uploading a lot of data
@@ -93,7 +93,7 @@ triangle but I opted for a quad because it was simpler to set up (I can
 hardcode the output vertex positions as the corners of the normalised
 device coordinates space at the near plane).</p>
 <figure>
-<img class="bordered-feature-image" src="img/fullscreen_quad.png" alt="Screen-Space geometry" width="33%"/>
+<img src="img/fullscreen_quad.png" alt="Screen-Space geometry" class="small_img"/>
 </figure>
 <p>The fragment shader will sample the cube texture with the view
 direction <strong>in world space</strong>. To get it, I simply multiply
@@ -131,7 +131,7 @@ further and optimise it a bit more.</p>
 <h3 id="avoiding-work">🥱 Avoiding work</h3>
 <p>I got the idea from this reply to one of my tweets:</p>
 <figure>
-<img class="bordered-feature-image" src="img/tweet_reply.png" alt="Embedded tweets don’t seem to work" width="50%"/>
+<img src="img/tweet_reply.png" alt="Embedded tweets don’t seem to work" />
 </figure>
 <p>It makes a lot of sense!</p>
 <p>My test scene only has 3 objects at the moment: the floor, a Stanford
@@ -153,7 +153,7 @@ drawn.</li>
 stencil of 0.</li>
 </ol>
 <p>This is how my stencil looks at the end of the pass:</p>
-<img class="bordered-feature-image" src="img/stencil.png" alt="Stencil buffer" width="33%" />
+<img src="img/stencil.png" alt="Stencil buffer" />
 <p>The skybox fragment shader will only run for the pixels in black,
 saving a lot of computing.</p>
 <p>To achieve this in the code I had to: 1. Change the Z buffer format
@@ -185,7 +185,7 @@ class="sourceCode swift"><code class="sourceCode swift"><span id="cb4-1"><a href
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span></code></pre></div>
 <p>Et voilà!</p>
 <figure>
-<img class="bordered-feature-image" src="img/skybox.gif" alt="Demo" width="75%"/>
+<img class="big_img" src="img/skybox.gif" alt="Demo"/>
 </figure>
 <hr />
 <h3 id="conclusions">🧑‍🏫 Conclusions</h3>
