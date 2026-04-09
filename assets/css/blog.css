@@ -122,3 +122,13 @@ hr {
 	margin:  0;
 	padding: 0;
 }
+
+#content img.link_logo
+{
+    display: inline-block;
+    background: none;
+    box-shadow: none;
+    width: 1em;
+    padding: 0;
+    margin: 0 0.5em 0 0.5em;
+}
