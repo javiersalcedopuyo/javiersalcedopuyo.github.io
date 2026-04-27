@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<!--
+	Halcyonic by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+        <title>Neovim is my terminal multiplexer</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/blog.css" />
+        <link rel="apple-touch-icon"      sizes="57x57"     href="../../images/Icon/apple-icon-57x57.png">
+        <link rel="apple-touch-icon"      sizes="60x60"     href="../../images/Icon/apple-icon-60x60.png">
+        <link rel="apple-touch-icon"      sizes="72x72"     href="../../images/Icon/apple-icon-72x72.png">
+        <link rel="apple-touch-icon"      sizes="76x76"     href="../../images/Icon/apple-icon-76x76.png">
+        <link rel="apple-touch-icon"      sizes="114x114"   href="../../images/Icon/apple-icon-114x114.png">
+        <link rel="apple-touch-icon"      sizes="120x120"   href="../../images/Icon/apple-icon-120x120.png">
+        <link rel="apple-touch-icon"      sizes="144x144"   href="../../images/Icon/apple-icon-144x144.png">
+        <link rel="apple-touch-icon"      sizes="152x152"   href="../../images/Icon/apple-icon-152x152.png">
+        <link rel="apple-touch-icon"      sizes="180x180"   href="../../images/Icon/apple-icon-180x180.png">
+        <link rel="icon" type="image/png" sizes="192x192"   href="../../images/Icon/android-icon-192x192.png">
+        <link rel="icon" type="image/png" sizes="32x32"     href="../../images/Icon/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="96x96"     href="../../images/Icon/favicon-96x96.png">
+        <link rel="icon" type="image/png" sizes="16x16"     href="../../images/Icon/favicon-16x16.png">
+	</head>
+
+    <body class="subpage">
+		<!-- Header -->
+	    <div id="page-wrapper">
+			<section id="header">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+							<!-- Logo -->
+							<h1><a href="../" id="logo">Javi's Blog</a></h1>
+							<nav id="nav">
+                                <a href="../../">Home</a>
+                                <a href="rss.xml"><img src="../../images/Icon/rss.png" class="link_logo"></a>
+							</nav>
+						</div>
+					</div>
+				</div>
+			</section>
+	    </div>
+	    <a class="go_up" href="#">⇪</a>
+		<!-- Content -->
+		<section id="content">
+			<div class="container">
+				<div class="row">
+					<div class="col-12">
+						<section>
+						    <p><a href="../">< Back</a></p>
+                            <p>📅 27-Apr-2026</p>
+                            <hr>
+
+<h2 id="neovim-is-my-terminal-multiplexer">Neovim is my terminal multiplexer</h2>
+<img src="img/nvim_setup.png" alt="Example of my Neovim setup" class="plain_img"/>
+<p><code>:term</code> can do 90% of what I need from a terminal with a
+handful of lines of Lua and no plugins required. The last 10% being
+covered by my terminal emulator of choice: <a href="https://ghostty.org/">Ghostty</a>.</p>
+<h3 id="the-use-case">The use case</h3>
+<p>I don’t need session persistence, nor I use any scripting (although I
+could probably just use Lua for that too if I did), so real multiplexers
+like <code>tmux</code> are overkill for me.</p>
+<h3 id="the-good">The good</h3>
+<ul>
+<li>Consistent and easy to remember key bindings, with the exception of
+the annoying default “exit to normal mode”.</li>
+<li>Vim motions allow for easy copy pasting.</li>
+<li>Easy to search.</li>
+<li>Consistent theming out of the box.</li>
+<li>If you run Neovim with a GUI you get those nice things on the
+terminal for free.</li>
+<li>If you run Neovim on a terminal emulator you can always fallback to
+it for anything Neovim falls short of.</li>
+</ul>
+<br>
+<h3 id="the-bad">The bad</h3>
+<ul>
+<li>You can’t edit the command inline, you have to move the cursor in
+insert mode for that.</li>
+<li>Working with different projects at once is akward, so I normally
+just use Ghostty’s tabs to get independent Neovim instances.</li>
+</ul>
+<br>
+<h3 id="the-config">The config</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode lua"><code class="sourceCode lua"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Exit terminal mode by tapping Esc twice</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span><span class="fu">set</span><span class="op">(</span><span class="st">&#39;t&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;Esc&gt;&lt;Esc&gt;&#39;</span><span class="op">,</span> <span class="st">&#39;&lt;C-</span><span class="sc">\\</span><span class="st">&gt;&lt;C-n&gt;&#39;</span><span class="op">,</span> <span class="op">{</span> <span class="va">desc</span> <span class="op">=</span> <span class="st">&#39;Exit terminal mode&#39;</span> <span class="op">})</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">-- Don&#39;t display the line numbers in terminal mode</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">api</span><span class="op">.</span><span class="fu">nvim_create_autocmd</span><span class="op">(</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;TermOpen&#39;</span><span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">desc</span> <span class="op">=</span> <span class="st">&#39;Hide the line numbers in terminal mode.&#39;</span><span class="op">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">group</span> <span class="op">=</span> <span class="va">vim</span><span class="op">.</span><span class="va">api</span><span class="op">.</span><span class="fu">nvim_create_augroup</span><span class="op">(</span> <span class="st">&#39;custom_term_open&#39;</span><span class="op">,</span> <span class="op">{</span> <span class="va">clear</span> <span class="op">=</span> <span class="kw">true</span> <span class="op">}</span> <span class="op">),</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">callback</span> <span class="op">=</span> <span class="kw">function</span> <span class="op">()</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            <span class="va">vim</span><span class="op">.</span><span class="va">opt_local</span><span class="op">.</span><span class="va">number</span>         <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="va">vim</span><span class="op">.</span><span class="va">opt_local</span><span class="op">.</span><span class="va">relativenumber</span> <span class="op">=</span> <span class="kw">false</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="kw">end</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="op">)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">-- Open a terminal in a new tab</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span><span class="fu">set</span><span class="op">(</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;n&#39;</span><span class="op">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&lt;Leader&gt;tt&#39;</span><span class="op">,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span><span class="op">()</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">tabnew</span><span class="op">()</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">term</span><span class="op">()</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span><span class="op">,</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="va">desc</span> <span class="op">=</span> <span class="st">&quot;[T]erminal in new [T]ab&quot;</span><span class="op">})</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">-- Open a terminal in a bottom split</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span><span class="fu">set</span><span class="op">(</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;n&#39;</span><span class="op">,</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&lt;Leader&gt;tj&#39;</span><span class="op">,</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span><span class="op">()</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">new</span><span class="op">()</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">term</span><span class="op">()</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">wincmd</span><span class="op">(</span><span class="st">&quot;J&quot;</span><span class="op">)</span> <span class="co">-- Move the new split to the bottom</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">api</span><span class="op">.</span><span class="fu">nvim_win_set_height</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">15</span><span class="op">)</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span><span class="op">,</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="va">desc</span> <span class="op">=</span> <span class="st">&#39;Open a [T]erminal bellow&#39;</span><span class="op">})</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">-- Open a terminal in a split to the left</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span><span class="fu">set</span><span class="op">(</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;n&#39;</span><span class="op">,</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&lt;Leader&gt;th&#39;</span><span class="op">,</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span><span class="op">()</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">new</span><span class="op">()</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">term</span><span class="op">()</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">wincmd</span><span class="op">(</span><span class="st">&quot;H&quot;</span><span class="op">)</span> <span class="co">-- Move the new split to the left</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span><span class="op">,</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="va">desc</span> <span class="op">=</span> <span class="st">&quot;Open [T]erminal to the left&quot;</span><span class="op">})</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">-- Open a terminal in a split to the right</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span><span class="fu">set</span><span class="op">(</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;n&#39;</span><span class="op">,</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&lt;Leader&gt;tl&#39;</span><span class="op">,</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span><span class="op">()</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">new</span><span class="op">()</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">term</span><span class="op">()</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">wincmd</span><span class="op">(</span><span class="st">&quot;L&quot;</span><span class="op">)</span> <span class="co">-- Move the new split to the right</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span><span class="op">,</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="va">desc</span> <span class="op">=</span> <span class="st">&quot;Open [T]erminal to the right&quot;</span><span class="op">})</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="co">-- Open a terminal in a top split</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="va">vim</span><span class="op">.</span><span class="va">keymap</span><span class="op">.</span><span class="fu">set</span><span class="op">(</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;n&#39;</span><span class="op">,</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&lt;Leader&gt;tk&#39;</span><span class="op">,</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span><span class="op">()</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">new</span><span class="op">()</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">term</span><span class="op">()</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">cmd</span><span class="op">.</span><span class="fu">wincmd</span><span class="op">(</span><span class="st">&quot;K&quot;</span><span class="op">)</span> <span class="co">-- Move the new split to the top</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>        <span class="va">vim</span><span class="op">.</span><span class="va">api</span><span class="op">.</span><span class="fu">nvim_win_set_height</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">15</span><span class="op">)</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span><span class="op">,</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span><span class="va">desc</span> <span class="op">=</span> <span class="st">&#39;Open a [T]erminal above&#39;</span><span class="op">})</span></span></code></pre></div>
+
+                            <hr>
+						    <p><a href="../">< Back</a></p>
+                        </section>
+					</div>
+				</div>
+		</section>
+	    <!-- Copyright -->
+	    <div id="copyright">
+		    &copy; Javier Salcedo. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+	    </div>
+  </body>
+</html>

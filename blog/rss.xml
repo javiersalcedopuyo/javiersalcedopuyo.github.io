@@ -10,6 +10,14 @@
         <link>https://javiersalcedopuyo.xyz/blog/</link>
 
         <item>
+            <title>Neovim is my terminal multiplexer</title>
+            <description>How I use Neovim as a (very basic) terminal multiplexer.</description>
+            <pubDate>Mon, 27 Apr 2026 20:22:00 GMT</pubDate>
+            <category>Thoughts</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2026/nvim_is_my_terminal.html</link>
+        </item>
+
+        <item>
             <title>"Hello Triangle" with Metal-cpp and no ObjC</title>
             <description>Tutorial explaining how to write a "Hello Triangle" application with Metal 4, exclusively in C++.</description>
             <pubDate>Wed, 04 Feb 2026 08:00:00 GMT</pubDate>
