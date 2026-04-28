@@ -2053,21 +2053,22 @@ input, select, textarea {
     padding: 0.333em;
     border-radius: 100%;
     background-color: white;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 0 0 16px rgba(0,0,0,0.75);
     background: url("images/bg05.jpg");
 }
 
 .go_up:hover
 {
     background-color: ghostWhite;
-    box-shadow: 5px 5px 5px silver;
+    font-size: 1.98em;
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.75);
 }
 
 .go_up:active
 {
     background-color: whiteSmoke;
-    font-size: 1.9em;
-    box-shadow: 2.5px 2.5px 2.5px grey;
+    font-size: 1.95em;
+    box-shadow: 0px 0px 8px rgba(0,0,0,0.75);
 }
 
 i, em{

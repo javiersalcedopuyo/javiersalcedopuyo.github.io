@@ -8,6 +8,8 @@ code {
 }
 
 pre {
+    margin-top: 1em;
+    margin-bottom: 1em;
     padding: 1em;
     line-height: 1;
     background-color: #333;
@@ -15,7 +17,7 @@ pre {
     display: block;
     border-radius: 5px;
     border-top: 1.5em solid lightGrey;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 0 0 16px rgba(0,0,0,0.5);
     position: relative;
 }
 
