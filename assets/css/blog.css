@@ -1,6 +1,8 @@
 @import "./main.css";
 @import "./minikai.css";
 
+@import url("https://fonts.googleapis.com/css2?family=Federo&display=swap");
+
 i, em{
     font-style: italic;
 }
@@ -70,12 +72,75 @@ hr {
     padding-left: 0;
 }
 
+#header
+{
+    background:
+        linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.1  ) 0%,
+          rgba(255, 255, 255, 0.333 ) 40%,
+          rgba(255, 255, 255, 0    ) 75%,
+          rgba(0, 0, 0, 1    ) 100%
+        ),
+	    url("images/black_marble.png");
+	background-size: 25%;
+	border-bottom: none;
+	box-shadow: none;
+}
+
+#header h1
+{
+    bottom: 30%;
+}
+
+#header nav
+{
+    bottom: 30%;
+}
+
+#header h1 a
+{
+    font-family: 'Federo';
+    background: linear-gradient(
+        to bottom,
+        #996515 0%,
+        #D4AF37 40%,
+        gold 50%,
+        #996515 60%,
+        #D4AF37 66%,
+        #996515 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: none;
+}
+#header nav a
+{
+    font-family: 'Federo';
+    font-weight: bold;
+    background: linear-gradient(
+        to bottom,
+        #996515 0%,
+        #D4AF37 40%,
+        gold 50%,
+        #996515 60%,
+        #D4AF37 66%,
+        #996515 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: none;
+}
+
 #content
 {
     background: #fafafa url("images/deco_01.jpeg");
     background-size: 128px;
-    border-top: solid 1px #fff;
+    border-top: none;
     padding: 45px 0 45px 0;
+    box-shadow: 
+        inset  8px  8px 16px rgba(0,0,0,0.75),
+        inset -8px -8px 16px rgba(0,0,0,0.75);
 }
 
 #content section
