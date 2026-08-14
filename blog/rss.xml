@@ -10,6 +10,14 @@
         <link>https://javiersalcedopuyo.xyz/blog/</link>
 
         <item>
+            <title>I ❤️ Online</title>
+            <description>A continuation to my "I ❤️ Offline" article, talking about good online tools.</description>
+            <pubDate>Sat, 15 Aug 2026 01:00:00 GMT</pubDate>
+            <category>Thoughts</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2026/I_love_online.html</link>
+        </item>
+
+        <item>
             <title>Neovim is my terminal multiplexer</title>
             <description>How I use Neovim as a (very basic) terminal multiplexer.</description>
             <pubDate>Mon, 27 Apr 2026 20:22:00 GMT</pubDate>
