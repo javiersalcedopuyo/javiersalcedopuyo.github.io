@@ -61,14 +61,15 @@ The `tasks.md` file is always pinned on a side panel, and looks like this:
 ```
 
 The daily workflow:
-1. Work on the tasks in today's header in whatever order I feel like, or based on urgency.
-2. If the task turns out to be more complex than expected, I create a dedicated note for it and replace the entry with a wikilink (more about this later). Sometimes I also add links to specific sub-tasks or bugs in the linked note.
+1. Work on the tasks in today's header in whatever order you feel like, or based on urgency. Tick them off when completed.
+2. If the task turns out to be more complex than expected, create a dedicated note for it and replace the entry with a wikilink (more about this later). Sometimes I also add links to specific sub-tasks or bugs in the linked note.
 3. If new tasks or bugs pop up during the day, add them at the end of the day's list.
-4. If I complete all tasks for the day, I select a new one from the inbox.
+4. If you complete all tasks for the day, select a new one from the inbox.
 5. At the end of the day:
-	1. *Copy* all the tasks that I couldn't complete and paste them back at the *top* (instead of at the bottom, like in _Autofocus_) of the Inbox.
-	2. Add the next day's header, adding a new month/year header if necessary.
-	3. Go through the inbox and *move* 3-4 tasks for the next day.
+	1. *Copy* all the tasks that you *worked on but couldn't complete*, and paste them back at the *top* (instead of at the bottom, like in _Autofocus_) of the inbox.
+ 	2. *Move* all the tasks that you didn't touch back to the inbox.
+	3. Add the next day's header, adding a new month/year header if necessary.
+	4. Go through the inbox and *move* 3-4 tasks for the next day.
 
 Very often I need more than just a bullet-point list of tasks. Some things require complex context, specific assets, screenshots, etc. Or just because they'll take multiple days and lots of research or trial and error.
 This is mostly for documentation purposes, which is vital if I don't want to start working on it straightaway, or if I need to remember how I dealt with it months after it was completed.
