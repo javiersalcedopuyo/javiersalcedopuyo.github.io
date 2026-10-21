@@ -10,6 +10,20 @@
         <link>https://javiersalcedopuyo.xyz/blog/</link>
 
         <item>
+            <title>Form follows function, but what if you got the function wrong?</title>
+            <description>
+                <p>Lately I've been thinking and reading a bit about architecture. Not <em>software</em> architecture. <em>Actual</em> architecture. Buildings. In the real physical world.</p>
+                <p>It's always been a interest of mine, and it was a strong contender on my selection of my bachelors. In particular, the aesthetics of buildings.</p>
+                <p>Even though I like it as much as anyone else, I don't believe the 19th century was the apex of architecture, like a lot of people online do. But I find it very hard to find modern(ist) examples that I truly like, so it's a bit hard to argue my point. My dislike of modernist architecture feels even more strange when I consider that I *love* modernist designs elsewhere.</p>
+                <p>The following article was the result of me thinking about that "contradiction", and was initially meant to be a letter to the editor of the brilliant <a href="https://worksinprogress.co/">Works In Progress Magazine</a>, until I found out that most of my thoughts have been already better expressed in <a href="https://worksinprogress.co/issue/machines-for-living-in/">this</a> old article of theirs.</p>
+                <p>Still it was the result of a lot of thought and introspection about a discipline I'm not well versed in, so I wanted to publish it somewhere regardless. I hope you enjoy it.</p>
+            </description>
+            <pubDate>Wed, 21 Oct 2026 23:45:00 GMT</pubDate>
+            <category>Off-topic</category>
+            <link>https://javiersalcedopuyo.xyz/blog/2026/form_follows_function.html</link>
+        </item>
+
+        <item>
             <title>Coding Agents are Steroids</title>
             <description>An analogy that I think explains a lot of the online discussion about AI and its usefulness and risks, and a framework to decide if you want to use them or not.</description>
             <pubDate>Sun, 04 Oct 2026 14:00:00 GMT</pubDate>
